@@ -5,51 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>テイクオン株式会社 | Take On Co., Ltd. コーポレートサイト</title>
     
-    <!-- Tailwind CSS (Play CDN for flexible theme manipulation) -->
+    <!-- Tailwind CSS (Play CDN for flexible styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts for rich Japanese typography and styles -->
+    <!-- Google Fonts for Organic Eco typography (Japanese Noto Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@400;500;700;800&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- React and ReactDOM from CDN (React 18.3.1 with reliable UMD builds for global React support) -->
+    <!-- React 18.3.1 (Reliable UMD build) -->
     <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
     
-    <!-- Babel for on-the-fly JSX transpilation -->
+    <!-- Babel for JSX compilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom CSS Variables for Seamless Theme Injection -->
+    <!-- Custom CSS Variables: Pure Organic Eco Brand Colors -->
     <style>
       :root {
-        --primary: #0F172A;
-        --secondary: #D4AF37;
-        --accent: #475569;
-        --bg: #F8FAFC;
-        --card-bg: #FFFFFF;
-        --text: #0F172A;
-        --text-muted: #64748B;
-        --radius: 0.375rem;
+        --primary: #2d3a24;       /* 深いオリーブグリーン */
+        --secondary: #c2a373;     /* 柔らかなゴールドベージュ */
+        --accent: #5e6e52;        /* ミドルアースカラー */
+        --bg: #fbf9f5;            /* 温かみのあるオフホワイト */
+        --card-bg: #f4efe6;       /* 優しいベージュ */
+        --text: #1c2514;          /* 視認性の良いオーガニックダーク */
+        --text-muted: #6b7c5c;    /* ソフトなグリーングレー */
+        --radius: 16px;           /* オーガニック特有の丸み */
         --font-family: 'Noto Sans JP', sans-serif;
-        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --glow: 0 0 0 transparent;
-        --border-color: #E2E8F0;
-        --transition-speed: 0.5s;
+        --shadow: 0 8px 30px rgba(45, 58, 36, 0.04);
+        --border-color: #e3dbc9;
+        --transition-speed: 0.3s;
       }
 
       body {
         background-color: var(--bg);
         color: var(--text);
         font-family: var(--font-family);
-        transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, font-family var(--transition-speed) ease;
-      }
-
-      .theme-transition {
-        transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
       }
 
       /* Custom animations */
@@ -81,184 +76,9 @@
 
     <!-- Main React Application code inside Babel Script -->
     <script type="text/babel">
-      const { useState, useEffect, useRef } = React;
+      const { useState, useEffect } = React;
 
-      // Definining 10 completely diverse presets
-      const THEME_PRESETS = [
-        {
-          id: "classic",
-          name: "Classic Modern",
-          jpName: "クラシック・モダン",
-          desc: "王道の品格。深い紺とゴールドのコントラストに美しきセリフ体を合わせて、最高品質の信頼感を演出します。",
-          primary: "#1e293b",
-          secondary: "#b45309",
-          accent: "#475569",
-          bg: "#f8fafc",
-          cardBg: "#ffffff",
-          text: "#0f172a",
-          textMuted: "#64748b",
-          radius: "4px",
-          fontFamily: "'Playfair Display', 'Noto Serif JP', serif",
-          shadow: "0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)",
-          borderColor: "#e2e8f0"
-        },
-        {
-          id: "minimal",
-          name: "Zen Minimalist",
-          jpName: "極限ミニマリズム",
-          desc: "余計な装飾を削ぎ落とした無垢の空間。純白とチャコールグレー、細いラインが静寂な洗練さを醸し出します。",
-          primary: "#18181b",
-          secondary: "#71717a",
-          accent: "#a1a1aa",
-          bg: "#ffffff",
-          cardBg: "#fafafa",
-          text: "#09090b",
-          textMuted: "#71717a",
-          radius: "0px",
-          fontFamily: "'Inter', 'Noto Sans JP', sans-serif",
-          shadow: "0 0 0 1px #e4e4e7",
-          borderColor: "#e4e4e7"
-        },
-        {
-          id: "organic",
-          name: "Organic Eco",
-          jpName: "オーガニック・エコ",
-          desc: "心と身体に優しい自然派デザイン。オリーブグリーンと柔らかなベージュが、美容健康事業のナチュラルさを引き立てます。",
-          primary: "#2d3a24",
-          secondary: "#c2a373",
-          accent: "#5e6e52",
-          bg: "#fbf9f5",
-          cardBg: "#f4efe6",
-          text: "#1c2514",
-          textMuted: "#6b7c5c",
-          radius: "16px",
-          fontFamily: "'Noto Sans JP', sans-serif",
-          shadow: "0 8px 30px rgba(45, 58, 36, 0.04)",
-          borderColor: "#e3dbc9"
-        },
-        {
-          id: "traditional",
-          name: "Traditional Wabi-Sabi",
-          jpName: "和モダン (藍＆朱)",
-          desc: "日本の美意識を継承。深みのある藍色、鮮やかな朱、和紙を感じさせるテクスチャ風の伝統色が心を惹きつけます。",
-          primary: "#0f233a",
-          secondary: "#cb3b27",
-          accent: "#5c7185",
-          bg: "#f6f4f0",
-          cardBg: "#fcfbfa",
-          text: "#152c42",
-          textMuted: "#7a8a99",
-          radius: "2px",
-          fontFamily: "'Shippori Mincho', 'Noto Serif JP', serif",
-          shadow: "0 4px 20px rgba(15, 35, 58, 0.04)",
-          borderColor: "#e5dec9"
-        },
-        {
-          id: "cyber",
-          name: "Dark Neon Cyber",
-          jpName: "バイブラント・サイバー",
-          desc: "近未来。漆黒に浮かび上がるエレクトリックブルーとネオングリーンの輝きが、先進性とデジタル感を極大化します。",
-          primary: "#06b6d4",
-          secondary: "#10b981",
-          accent: "#3b82f6",
-          bg: "#090d16",
-          cardBg: "#111827",
-          text: "#f3f4f6",
-          textMuted: "#9ca3af",
-          radius: "8px",
-          fontFamily: "'Fira Code', 'Noto Sans JP', monospace",
-          shadow: "0 0 15px rgba(6, 182, 212, 0.15)",
-          borderColor: "#1f2937",
-          glow: "0 0 10px rgba(6, 182, 212, 0.4)"
-        },
-        {
-          id: "elegant",
-          name: "Luxury Elegant",
-          jpName: "ラグジュアリー・エレガント",
-          desc: "極上の華やかさ。ローズシャンパンと大理石のなめらかな光沢、洗練されたフォントが非日常の美を提供します。",
-          primary: "#581c3e",
-          secondary: "#dbb28c",
-          accent: "#834f6d",
-          bg: "#fff9f6",
-          cardBg: "#ffffff",
-          text: "#2d0f21",
-          textMuted: "#8e7584",
-          radius: "24px",
-          fontFamily: "'Playfair Display', 'Noto Serif JP', serif",
-          shadow: "0 12px 40px rgba(88, 28, 62, 0.05)",
-          borderColor: "#f5e8e1"
-        },
-        {
-          id: "playful",
-          name: "Pop & Playful",
-          jpName: "ポップ＆プレイフル",
-          desc: "毎日をハッピーにするデザイン。コーラルピンクと爽やかなレモンイエローが、楽しい雑貨の世界観を表します。",
-          primary: "#ff5e7e",
-          secondary: "#ffbd39",
-          accent: "#4ea3a1",
-          bg: "#fff5f6",
-          cardBg: "#ffffff",
-          text: "#2e0810",
-          textMuted: "#856a70",
-          radius: "30px",
-          fontFamily: "'Outfit', 'M PLUS Rounded 1c', sans-serif",
-          shadow: "0 10px 0px rgba(255, 94, 126, 0.08)",
-          borderColor: "#ffd6dd"
-        },
-        {
-          id: "nordic",
-          name: "Nordic Cozy",
-          jpName: "北欧ほっこりコジー",
-          desc: "あたたかみのある北欧スタイル。スモーキーなペールブルーとテラコッタが、居心地の良いくつろぎ空間を作ります。",
-          primary: "#335c67",
-          secondary: "#e07a5f",
-          accent: "#81b29a",
-          bg: "#f4f1de",
-          cardBg: "#ffffff",
-          text: "#3d405b",
-          textMuted: "#727793",
-          radius: "12px",
-          fontFamily: "'Noto Sans JP', sans-serif",
-          shadow: "0 8px 24px rgba(51, 92, 103, 0.06)",
-          borderColor: "#e3dfc8"
-        },
-        {
-          id: "swiss",
-          name: "Swiss Editorial",
-          jpName: "スイス・エディトリアル",
-          desc: "雑誌のような大胆なレイアウト。強烈な赤と極太サンセリフフォントによる、圧倒的で自信あふれる存在感。",
-          primary: "#e11d48",
-          secondary: "#111827",
-          accent: "#4b5563",
-          bg: "#f3f4f6",
-          cardBg: "#ffffff",
-          text: "#000000",
-          textMuted: "#4b5563",
-          radius: "0px",
-          fontFamily: "'Outfit', 'Noto Sans JP', sans-serif",
-          shadow: "8px 8px 0px #000000",
-          borderColor: "#000000"
-        },
-        {
-          id: "wellness",
-          name: "Ethereal Wellness",
-          jpName: "神秘的ウェルネス",
-          desc: "精神と静寂の調和。ラベンダーパープルと朝霧を思わせるアイスブルーが、極上の美容と瞑想の癒し空間へ誘います。",
-          primary: "#4c1d95",
-          secondary: "#a78bfa",
-          accent: "#7c3aed",
-          bg: "#f5f3ff",
-          cardBg: "#ffffff",
-          text: "#1e1b4b",
-          textMuted: "#6b21a8",
-          radius: "12px",
-          fontFamily: "'Inter', 'Noto Sans JP', sans-serif",
-          shadow: "0 10px 30px rgba(124, 58, 237, 0.05)",
-          borderColor: "#ddd6fe"
-        }
-      ];
-
-      // Simulated Product Catalog based on uploaded assets
+      // Simulated Product Catalog based on new simplified filenames
       const PRODUCTS = [
         {
           id: "gen-01",
@@ -268,17 +88,17 @@
           spec: "素材: 本牛革（イタリア製）/ サイズ: W28×H20×D12cm / カラー: クラシックトープ",
           basePrice: 12000,
           minLot: 10,
-          img: "general_goods_collage_1780892243084.png"
+          img: "general_goods.png"
         },
         {
           id: "gen-02",
           category: "general",
           name: "シルクブレンド・エレガントスカーフ",
-          desc: "大人の気品を引き立てる繊浅なタッチのスカーフ。アクセサリーとしても、バッグのチャームとしても幅広く活躍します。",
+          desc: "大人の気品を引き立てる繊細なタッチのスカーフ。アクセサリーとしても、バッグのチャームとしても幅広く活躍します。",
           spec: "素材: シルク 60%, モダール 40% / サイズ: 70×70cm / 生産国: イタリア",
           basePrice: 2800,
           minLot: 20,
-          img: "general_goods_collage_1780892243084.png"
+          img: "general_goods.png"
         },
         {
           id: "gen-03",
@@ -288,7 +108,7 @@
           spec: "容量: 50ml / 主成分: アルガンオイル, ホホバ種子油, ヒアルロン酸",
           basePrice: 3500,
           minLot: 15,
-          img: "general_goods_collage_1780892243084.png"
+          img: "general_goods.png"
         },
         {
           id: "bh-01",
@@ -298,7 +118,7 @@
           spec: "消費電力: 12W / 水タンク容量: 150ml / 適用畳数: 最大12畳 / LEDライト搭載",
           basePrice: 4800,
           minLot: 10,
-          img: "beauty_health_goods_1780892260342.png"
+          img: "beauty_health.png"
         },
         {
           id: "bh-02",
@@ -308,7 +128,7 @@
           spec: "ラインナップ: VITALITY, IMMUNITY BOOST, OMEGA-3, DIGESTIVE ENZYMES / 内容量: 60粒入り",
           basePrice: 1800,
           minLot: 50,
-          img: "beauty_health_goods_1780892260342.png"
+          img: "beauty_health.png"
         },
         {
           id: "bh-03",
@@ -318,54 +138,23 @@
           spec: "内容量: ティーバッグ20包入り / 原材料: レモングラス, ミント, カモミール, ルイボス",
           basePrice: 950,
           minLot: 30,
-          img: "beauty_health_goods_1780892260342.png"
+          img: "beauty_health.png"
         }
       ];
 
       function App() {
-        const [currentTheme, setCurrentTheme] = useState(THEME_PRESETS[0]);
-        const [showAIStudioPanel, setShowAIStudioPanel] = useState(false);
-        const [customThemeQuery, setCustomThemeQuery] = useState("");
-        const [aiLoading, setAiLoading] = useState(false);
-        const [aiError, setAiError] = useState("");
-        const [customThemes, setCustomThemes] = useState([]);
         const [activeTab, setActiveTab] = useState("all");
         const [favoriteCart, setFavoriteCart] = useState({});
         const [contactForm, setContactForm] = useState({ name: "", email: "", company: "", message: "", category: "仕入れについて" });
         const [formSubmitted, setFormSubmitted] = useState(false);
         const [toast, setToast] = useState(null);
 
-        // API Key setup (Empty string for runtime injection)
-        const apiKey = ""; 
-
-        // Update CSS Variables dynamically based on currentTheme
-        useEffect(() => {
-          const root = document.documentElement;
-          root.style.setProperty('--primary', currentTheme.primary);
-          root.style.setProperty('--secondary', currentTheme.secondary);
-          root.style.setProperty('--accent', currentTheme.accent);
-          root.style.setProperty('--bg', currentTheme.bg);
-          root.style.setProperty('--card-bg', currentTheme.cardBg);
-          root.style.setProperty('--text', currentTheme.text);
-          root.style.setProperty('--text-muted', currentTheme.textMuted);
-          root.style.setProperty('--radius', currentTheme.radius);
-          root.style.setProperty('--font-family', currentTheme.fontFamily);
-          root.style.setProperty('--shadow', currentTheme.shadow);
-          root.style.setProperty('--border-color', currentTheme.borderColor);
-          root.style.setProperty('--glow', currentTheme.glow || '0 0 0 transparent');
-        }, [currentTheme]);
-
         const showToastMessage = (msg) => {
           setToast(msg);
           setTimeout(() => setToast(null), 4000);
         };
 
-        const handleThemeChange = (theme) => {
-          setCurrentTheme(theme);
-          showToastMessage(`デザインスタイルを 「${theme.jpName}」 に切り替えました。`);
-        };
-
-        // B2B Cart / Volume Discount Logic
+        // B2B Volume Discount Logic
         const updateQuantity = (productId, qty) => {
           const product = PRODUCTS.find(p => p.id === productId);
           if (qty < product.minLot && qty !== 0) {
@@ -381,11 +170,10 @@
         const calculatePrice = (product, quantity) => {
           if (!quantity) return 0;
           let discount = 1.0;
-          // Volume discount tiers
           if (quantity >= product.minLot * 5) {
-            discount = 0.85; // 15% off for bulk
+            discount = 0.85; // Bulk discount: 15% off
           } else if (quantity >= product.minLot * 2) {
-            discount = 0.92; // 8% off for medium batch
+            discount = 0.92; // Mid batch: 8% off
           }
           return Math.round(product.basePrice * quantity * discount);
         };
@@ -403,186 +191,7 @@
             return;
           }
           setFormSubmitted(true);
-          showToastMessage("お問い合わせを送信しました。折り返し担当者よりご連絡いたします。");
-        };
-
-        // Real Gemini AI Integration for Dynamic Theme Generation!
-        const generateAITheme = async () => {
-          if (!customThemeQuery.trim()) {
-            setAiError("どのようなデザインにしたいか言葉を入力してください。");
-            return;
-          }
-
-          setAiLoading(true);
-          setAiError("");
-
-          const systemPrompt = `
-            You are an elite UX/UI Designer. Based on the user's creative prompt, generate a beautiful, harmonious web color palette and typography configuration suited for a corporate B2B website.
-            Provide output strictly in JSON format as specified. No codeblocks, no extra words.
-            Follow these visual rules:
-            - primary: Main dark/strong brand color (e.g. for header, main titles).
-            - secondary: Brilliant highlight accent color (gold, rose, emerald, vibrant orange, etc.).
-            - accent: Complementary midtone.
-            - bg: Very comfortable background color (use ultra-light tint of primary or organic tones, never pure harsh colors).
-            - cardBg: Clean card surface color, usually #ffffff or extremely light.
-            - text: Dark readable color matching the theme (avoid pure black if it looks harsh).
-            - textMuted: Soft slate/gray tone.
-            - radius: CSS border-radius value (e.g. "0px", "4px", "12px", "24px").
-            - fontFamily: Must choose from one of these combinations:
-               - Serif elegant: "'Playfair Display', 'Noto Serif JP', serif"
-               - Minimal sans: "'Inter', 'Noto Sans JP', sans-serif"
-               - Cozy round: "'Outfit', 'M PLUS Rounded 1c', sans-serif"
-               - Technical: "'Fira Code', 'Noto Sans JP', monospace"
-            - shadow: Elegant CSS box-shadow value (e.g., "0 4px 20px rgba(0,0,0,0.05)").
-            - borderColor: Clean border contrast color.
-            - jpName: Give this generated theme an elegant Japanese name.
-          `;
-
-          const userQuery = `Create a custom theme configuration for: "${customThemeQuery}". Provide only the JSON containing jpName, primary, secondary, accent, bg, cardBg, text, textMuted, radius, fontFamily, shadow, and borderColor.`;
-
-          let retries = 5;
-          let delay = 1000;
-
-          while (retries > 0) {
-            try {
-              const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-              const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  contents: [{ parts: [{ text: userQuery }] }],
-                  systemInstruction: { parts: [{ text: systemPrompt }] },
-                  generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                      type: "OBJECT",
-                      properties: {
-                        jpName: { type: "STRING" },
-                        primary: { type: "STRING" },
-                        secondary: { type: "STRING" },
-                        accent: { type: "STRING" },
-                        bg: { type: "STRING" },
-                        cardBg: { type: "STRING" },
-                        text: { type: "STRING" },
-                        textMuted: { type: "STRING" },
-                        radius: { type: "STRING" },
-                        fontFamily: { type: "STRING" },
-                        shadow: { type: "STRING" },
-                        borderColor: { type: "STRING" }
-                      },
-                      required: ["jpName", "primary", "secondary", "accent", "bg", "cardBg", "text", "textMuted", "radius", "fontFamily", "shadow", "borderColor"]
-                    }
-                  }
-                })
-              });
-
-              if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
-              }
-
-              const data = await response.json();
-              const themeText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (themeText) {
-                const generatedConfig = JSON.parse(themeText);
-                const newTheme = {
-                  id: `custom-${Date.now()}`,
-                  name: `AI: ${generatedConfig.jpName}`,
-                  jpName: `AI: ${generatedConfig.jpName}`,
-                  desc: `「${customThemeQuery}」のイメージからGeminiが設計した世界に一つだけのテーラーメイド・デザインです。`,
-                  ...generatedConfig
-                };
-                
-                setCurrentTheme(newTheme);
-                setCustomThemes(prev => [newTheme, ...prev]);
-                showToastMessage(`AI生成テーマ 「${generatedConfig.jpName}」 を適用しました！`);
-                setCustomThemeQuery("");
-                break;
-              }
-            } catch (err) {
-              retries--;
-              if (retries === 0) {
-                console.error(err);
-                // Fallback elegant theme generator in case of real key failure
-                generateLocalFallbackTheme(customThemeQuery);
-              } else {
-                await new Promise(resolve => setTimeout(resolve, delay));
-                delay *= 2;
-              }
-            }
-          }
-          setAiLoading(false);
-        };
-
-        // Beautiful local mockup theme generation if API Key is not set or fails
-        const generateLocalFallbackTheme = (query) => {
-          const mockThemes = [
-            {
-              jpName: "桜フローラル・フェミニン",
-              primary: "#881337",
-              secondary: "#f472b6",
-              accent: "#db2777",
-              bg: "#fff1f2",
-              cardBg: "#ffffff",
-              text: "#4c0519",
-              textMuted: "#9f1239",
-              radius: "16px",
-              fontFamily: "'Playfair Display', 'Noto Serif JP', serif",
-              shadow: "0 10px 25px rgba(219, 39, 119, 0.05)",
-              borderColor: "#ffe4e6"
-            },
-            {
-              jpName: "深海アクア・クール",
-              primary: "#0f172a",
-              secondary: "#38bdf8",
-              accent: "#0284c7",
-              bg: "#f0f9ff",
-              cardBg: "#ffffff",
-              text: "#0f172a",
-              textMuted: "#0369a1",
-              radius: "6px",
-              fontFamily: "'Inter', 'Noto Sans JP', sans-serif",
-              shadow: "0 8px 30px rgba(56, 189, 248, 0.08)",
-              borderColor: "#e0f2fe"
-            },
-            {
-              jpName: "京都抹茶・和モダン",
-              primary: "#14532d",
-              secondary: "#84cc16",
-              accent: "#166534",
-              bg: "#f0fdf4",
-              cardBg: "#ffffff",
-              text: "#14532d",
-              textMuted: "#15803d",
-              radius: "4px",
-              fontFamily: "'Shippori Mincho', 'Noto Serif JP', serif",
-              shadow: "0 4px 12px rgba(20, 83, 45, 0.04)",
-              borderColor: "#dcfce7"
-            }
-          ];
-
-          // Choose randomly for fun or select matching keyword
-          let selected = mockThemes[Math.floor(Math.random() * mockThemes.length)];
-          
-          if (query.includes("和") || query.includes("京都") || query.includes("緑")) {
-            selected = mockThemes[2];
-          } else if (query.includes("海") || query.includes("青") || query.includes("クール")) {
-            selected = mockThemes[1];
-          } else if (query.includes("ピンク") || query.includes("桜") || query.includes("花") || query.includes("フェミニン")) {
-            selected = mockThemes[0];
-          }
-
-          const newTheme = {
-            id: `custom-fallback-${Date.now()}`,
-            name: `AI: ${selected.jpName}`,
-            jpName: `AI: ${selected.jpName} (Demo)`,
-            desc: `「${query}」のイメージから設計されたデモ用テーマです。(※現在、環境内APIキーはエミュレーションで稼働中)`,
-            ...selected
-          };
-
-          setCurrentTheme(newTheme);
-          setCustomThemes(prev => [newTheme, ...prev]);
-          showToastMessage(`イメージ「${query}」からカスタムデザインを自動生成しました！`);
-          setCustomThemeQuery("");
+          showToastMessage("お問い合わせを受付いたしました。");
         };
 
         const filteredProducts = activeTab === "all" 
@@ -590,27 +199,21 @@
           : PRODUCTS.filter(p => p.category === activeTab);
 
         return (
-          <div className="min-h-screen theme-transition overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}>
+          <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}>
             
-            {/* Top Premium Notification Bar with Trigger Info */}
-            <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white text-xs md:text-sm py-2 px-4 flex justify-between items-center z-50 shadow-inner">
+            {}
+            {/* Top Premium Notification Bar */}
+            <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white text-xs md:text-sm py-2.5 px-6 flex justify-between items-center z-50 shadow-inner">
               <div className="flex items-center gap-2 overflow-hidden truncate">
-                <span className="bg-[var(--secondary)] text-[var(--primary)] font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">NEW</span>
-                <span className="truncate">一般雑貨・美容健康用品 卸売「テイクオン株式会社」の次世代マルチ体験サイト</span>
+                <span className="bg-[var(--secondary)] text-[var(--primary)] font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">OFFICIAL</span>
+                <span className="truncate font-medium">一般雑貨・美容健康用品 卸売「テイクオン株式会社」コーポレートサイト</span>
               </div>
-              <button 
-                onClick={() => setShowAIStudioPanel(!showAIStudioPanel)}
-                className="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-1 rounded transition flex items-center gap-1 shrink-0 ml-4 cursor-pointer"
-              >
-                <i className="lucide-sparkles text-xs animate-pulse"></i>
-                <span className="hidden sm:inline">AIデザイン作成</span>
-              </button>
             </div>
 
             {/* Navigation Header */}
             <header className="sticky top-0 z-40 backdrop-blur-md bg-[var(--card-bg)]/90 border-b border-[var(--border-color)] py-4 px-6 md:px-12 flex justify-between items-center transition-colors duration-300">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-[var(--secondary)] flex items-center justify-center font-bold text-lg shadow-md transition-all">
+                <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-[var(--secondary)] flex items-center justify-center font-bold text-lg shadow-md">
                   TO
                 </div>
                 <div>
@@ -619,132 +222,21 @@
                 </div>
               </div>
 
-              {/* Standard Menu Links */}
               <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#about" className="hover:text-[var(--secondary)] transition-colors">企業コンセプト</a>
                 <a href="#segments" className="hover:text-[var(--secondary)] transition-colors">事業紹介</a>
                 <a href="#products" className="hover:text-[var(--secondary)] transition-colors">仕入れカタログ</a>
-                <a href="#styles" className="hover:text-[var(--secondary)] transition-colors">デザイン解説</a>
                 <a href="#profile" className="hover:text-[var(--secondary)] transition-colors">会社情報</a>
               </nav>
 
               <div className="flex items-center gap-3">
-                <a href="#contact" className="hidden sm:inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--card-bg)] px-5 py-2.5 text-xs font-bold tracking-wider rounded-[var(--radius)] uppercase transition shadow-[var(--shadow)]">
+                <a href="#contact" className="bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-5 py-2.5 text-xs font-bold tracking-wider rounded-[var(--radius)] uppercase transition shadow-[var(--shadow)]">
                   お問い合わせ
                 </a>
-                <button 
-                  onClick={() => {
-                    const el = document.getElementById("style-selection-bar");
-                    if(el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="bg-[var(--secondary)] text-[var(--primary)] hover:scale-105 p-2.5 rounded-[var(--radius)] transition shadow-sm flex items-center justify-center cursor-pointer"
-                  title="スタイル切り替え"
-                >
-                  <i className="lucide-palette w-5 h-5"></i>
-                </button>
               </div>
             </header>
 
-            {/* Dynamic AI Custom Theme Generator Drawer */}
-            {showAIStudioPanel && (
-              <div className="bg-gradient-to-b from-slate-900 via-slate-950 to-indigo-950 text-white p-6 md:p-8 border-b-4 border-[var(--secondary)] relative z-50 shadow-2xl transition-all duration-300">
-                <button 
-                  onClick={() => setShowAIStudioPanel(false)}
-                  className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full cursor-pointer"
-                >
-                  <i className="lucide-x w-6 h-6"></i>
-                </button>
-                <div className="max-w-4xl mx-auto">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
-                      <i className="lucide-sparkles w-6 h-6 animate-spin" style={{ animationDuration: '4s' }}></i>
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold font-sans">Gemini 2.5 AI デザインラボ</h3>
-                  </div>
-                  <p className="text-slate-300 text-sm mb-6 leading-relaxed">
-                    お好きな雰囲気やキーワード（例: 「桜香る春の優しい雰囲気」「近未来の高級サイバーオーガニック」「北欧風のほっこり木製家具」「伝統と革新の京都」など）を入力してください。Gemini AIがそれに応じた色彩比率、フォントスタイル、丸みなどのUI変数をリアルタイム解析し、この場でウェブサイトへダイナミック適用します。
-                  </p>
-                  
-                  <div className="flex flex-col md:flex-row gap-4 items-stretch">
-                    <input 
-                      type="text"
-                      value={customThemeQuery}
-                      onChange={(e) => setCustomThemeQuery(e.target.value)}
-                      placeholder="例: 深海を思わせるミステリアスなダークモードスタイル..."
-                      className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-sans"
-                      onKeyDown={(e) => e.key === 'Enter' && generateAITheme()}
-                    />
-                    <button 
-                      onClick={generateAITheme}
-                      disabled={aiLoading}
-                      className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3.5 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      {aiLoading ? (
-                        <>
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          <span>AI解析・調合中...</span>
-                        </>
-                      ) : (
-                        <>
-                          <i className="lucide-wand-2 w-4 h-4"></i>
-                          <span>デザインを自動生成</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  {aiError && <p className="text-red-400 text-xs mt-2 font-sans flex items-center gap-1"><i className="lucide-alert-circle w-3.5 h-3.5"></i>{aiError}</p>}
-                </div>
-              </div>
-            )}
-
-            {/* REAL-TIME 10-STYLE SWITCHER BAR (Sticky & Highly Accessible) */}
-            <div id="style-selection-bar" className="bg-[var(--card-bg)] border-b border-[var(--border-color)] py-5 px-6 md:px-12 sticky top-[72px] z-30 shadow-sm transition-colors duration-300">
-              <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                  <div className="shrink-0">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--secondary)] mb-1">
-                      <span className="w-2 h-2 rounded-full bg-[var(--secondary)] animate-ping"></span>
-                      <span>10 Designs Experience</span>
-                    </div>
-                    <h4 className="text-sm md:text-base font-extrabold tracking-tight">デザインスタイルをリアルタイム切り替え</h4>
-                    <p className="text-xs text-[var(--text-muted)] mt-0.5">同じHTML構造のまま、全く異なるブランディング世界観に変化します。</p>
-                  </div>
-                  
-                  {/* The Switcher Buttons */}
-                  <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none -mx-6 px-6 lg:mx-0 lg:px-0">
-                    {THEME_PRESETS.map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => handleThemeChange(t)}
-                        className={`px-4 py-2 text-xs font-bold rounded-full border transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                          currentTheme.id === t.id 
-                            ? "bg-[var(--primary)] text-[var(--card-bg)] border-[var(--primary)] scale-105 shadow-md" 
-                            : "bg-[var(--card-bg)] text-[var(--text)] border-[var(--border-color)] hover:border-[var(--primary)] hover:bg-[var(--primary)]/5"
-                        }`}
-                      >
-                        <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: t.primary }}></span>
-                        <span>{t.jpName}</span>
-                      </button>
-                    ))}
-                    {customThemes.map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => handleThemeChange(t)}
-                        className={`px-4 py-2 text-xs font-bold rounded-full border transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                          currentTheme.id === t.id 
-                            ? "bg-[var(--primary)] text-[var(--card-bg)] border-[var(--primary)] scale-105 shadow-md" 
-                            : "bg-[var(--card-bg)] text-[var(--text)] border-[var(--border-color)] hover:border-[var(--primary)] hover:bg-[var(--primary)]/5"
-                        }`}
-                      >
-                        <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: t.primary }}></span>
-                        <span>{t.jpName}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            {}
             {/* HERO SECTION */}
             <section className="relative overflow-hidden pt-12 pb-20 md:py-24 px-6 md:px-12 flex-1">
               <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -763,35 +255,14 @@
                   </h2>
 
                   <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed max-w-lg">
-                    テイクオン株式会社は、国内外の厳選された一般雑貨および美容健康用品の卸売事業を展開しています。トレンドを先取りした高品質なプロダクトを、安定した流通ルートでお届けし、貴社のビジネス成長と顧客満足に貢献いたします。
+                    テイクオン株式会社は、国内外の厳選された一般雑貨および美容健康用品の卸売事業を展開しています。トレンドを先取りしたオーガニック・ナチュラルなプロダクトを、安定した流通ルートでお届けし、貴社のビジネス成長と顧客満足に貢献いたします。
                   </p>
 
-                  {/* Interactive Theme Status Banner inside Hero */}
-                  <div className="p-4 rounded-[var(--radius)] border border-[var(--border-color)] bg-[var(--card-bg)] shadow-[var(--shadow)] transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--primary)]/10 text-[var(--primary)] shrink-0">
-                        <i className="lucide-wand-2 w-5 h-5"></i>
-                      </div>
-                      <div>
-                        <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--secondary)]">Current Design Theme</p>
-                        <h5 className="text-sm font-bold">{currentTheme.name} ({currentTheme.jpName})</h5>
-                        <p className="text-xs text-[var(--text-muted)] leading-snug mt-0.5">{currentTheme.desc}</p>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="flex flex-wrap items-center gap-4 pt-2">
-                    <a href="#products" className="bg-[var(--primary)] hover:opacity-90 text-[var(--card-bg)] px-8 py-3.5 rounded-[var(--radius)] font-bold text-sm shadow-[var(--shadow)] transition flex items-center gap-2">
+                    <a href="#products" className="bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-8 py-3.5 rounded-[var(--radius)] font-bold text-sm shadow-[var(--shadow)] transition flex items-center gap-2">
                       <span>仕入れ・商品カタログを見る</span>
                       <i className="lucide-arrow-right w-4 h-4"></i>
                     </a>
-                    <button 
-                      onClick={() => setShowAIStudioPanel(true)}
-                      className="border border-[var(--primary)]/20 hover:bg-[var(--primary)]/5 text-[var(--primary)] px-6 py-3.5 rounded-[var(--radius)] font-bold text-sm transition flex items-center gap-2 cursor-pointer"
-                    >
-                      <i className="lucide-sparkles w-4 h-4"></i>
-                      <span>AIデザインに挑戦</span>
-                    </button>
                   </div>
                 </div>
 
@@ -803,7 +274,7 @@
                     <div className="col-span-7 space-y-4 animate-float">
                       <div className="relative group overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                         <img 
-                          src="general_goods_collage_1780892243084.png" 
+                          src="general_goods.png" 
                           alt="一般雑貨コラージュ" 
                           className="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition-transform duration-700"
                         />
@@ -831,7 +302,7 @@
 
                       <div className="relative group overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                         <img 
-                          src="beauty_health_goods_1780892260342.png" 
+                          src="beauty_health.png" 
                           alt="美容健康用品コラージュ" 
                           className="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition-transform duration-700"
                         />
@@ -846,7 +317,7 @@
                   </div>
 
                   {/* Absolute design accent badge */}
-                  <div className="absolute -bottom-6 -left-6 bg-[var(--primary)] text-[var(--card-bg)] px-6 py-4 rounded-[var(--radius)] shadow-xl hidden sm:flex items-center gap-3 border border-[var(--border-color)]">
+                  <div className="absolute -bottom-6 -left-6 bg-[var(--primary)] text-[var(--bg)] px-6 py-4 rounded-[var(--radius)] shadow-xl hidden sm:flex items-center gap-3 border border-[var(--border-color)]">
                     <div className="w-2.5 h-2.5 rounded-full bg-[var(--secondary)] animate-ping"></div>
                     <div>
                       <p className="text-[10px] text-white/60 font-semibold uppercase tracking-wider">品質最優先の流通</p>
@@ -858,8 +329,9 @@
               </div>
             </section>
 
+            {}
             {/* CONCEPT SECTION (About Us) */}
-            <section id="about" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)] transition-all duration-300">
+            <section id="about" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)]">
               <div className="max-w-5xl mx-auto px-6 text-center space-y-8">
                 <div className="space-y-2">
                   <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Corporate Concept</span>
@@ -873,7 +345,7 @@
 
                 {/* Features Highlights */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 text-left">
-                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] space-y-3">
+                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] bg-[var(--bg)] space-y-3">
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-globe w-5 h-5"></i>
                     </div>
@@ -883,7 +355,7 @@
                     </p>
                   </div>
 
-                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] space-y-3">
+                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] bg-[var(--bg)] space-y-3">
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-shield-check w-5 h-5"></i>
                     </div>
@@ -893,7 +365,7 @@
                     </p>
                   </div>
 
-                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] space-y-3">
+                  <div className="p-6 rounded-[var(--radius)] border border-[var(--border-color)] bg-[var(--bg)] space-y-3">
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-users w-5 h-5"></i>
                     </div>
@@ -906,6 +378,7 @@
               </div>
             </section>
 
+            {}
             {/* BUSINESS SEGMENTS */}
             <section id="segments" className="py-20 px-6 md:px-12 max-w-7xl mx-auto space-y-16">
               <div className="text-center space-y-2">
@@ -918,7 +391,7 @@
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
                 <div className="lg:col-span-6 overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                   <img 
-                    src="general_goods_collage_1780892243084.png" 
+                    src="general_goods.png" 
                     alt="一般雑貨事業" 
                     className="w-full h-[300px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
                   />
@@ -934,7 +407,7 @@
                     <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 高品質なレザーアイテム・ファッション服飾小物</li>
                     <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 季節ニーズに合わせた生活便利アイテムのOEM提案</li>
                   </ul>
-                  <a href="#products" onClick={() => setActiveTab("general")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--card-bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
+                  <a href="#products" onClick={() => setActiveTab("general")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
                     一般雑貨カタログを絞り込む
                   </a>
                 </div>
@@ -944,7 +417,7 @@
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center pt-12">
                 <div className="lg:col-span-6 lg:order-2 overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                   <img 
-                    src="beauty_health_goods_1780892260342.png" 
+                    src="beauty_health.png" 
                     alt="美容健康事業" 
                     className="w-full h-[300px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
                   />
@@ -960,15 +433,16 @@
                     <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> オーガニックかつトレーサビリティの取れたハーブ・精油類</li>
                     <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 現代人の美と調和を支えるオリジナルサプリメントの卸販売</li>
                   </ul>
-                  <a href="#products" onClick={() => setActiveTab("beauty")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--card-bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
+                  <a href="#products" onClick={() => setActiveTab("beauty")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
                     美容健康カタログを絞り込む
                   </a>
                 </div>
               </div>
             </section>
 
+            {}
             {/* INTERACTIVE CATALOG & B2B SIMULATOR */}
-            <section id="products" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)] transition-all duration-300">
+            <section id="products" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)]">
               <div className="max-w-7xl mx-auto px-6 space-y-12">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                   <div className="space-y-2">
@@ -981,19 +455,19 @@
                   <div className="flex items-center gap-2 bg-[var(--primary)]/5 p-1 rounded-full border border-[var(--border-color)] shrink-0 self-start md:self-auto">
                     <button 
                       onClick={() => setActiveTab("all")} 
-                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'all' ? 'bg-[var(--primary)] text-[var(--card-bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
+                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'all' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
                       すべて
                     </button>
                     <button 
                       onClick={() => setActiveTab("general")} 
-                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'general' ? 'bg-[var(--primary)] text-[var(--card-bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
+                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'general' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
                       一般雑貨・コスメ
                     </button>
                     <button 
                       onClick={() => setActiveTab("beauty")} 
-                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'beauty' ? 'bg-[var(--primary)] text-[var(--card-bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
+                      className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'beauty' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
                       美容健康
                     </button>
@@ -1056,7 +530,7 @@
                               <div className="flex items-center gap-2">
                                 <button 
                                   onClick={() => updateQuantity(p.id, Math.max(0, quantity - (quantity === p.minLot ? p.minLot : 5)))}
-                                  className="w-8 h-8 rounded border border-[var(--border-color)] bg-[var(--bg)] flex items-center justify-center font-bold hover:bg-[var(--primary)] hover:text-[var(--card-bg)] cursor-pointer"
+                                  className="w-8 h-8 rounded border border-[var(--border-color)] bg-[var(--bg)] flex items-center justify-center font-bold hover:bg-[var(--primary)] hover:text-[var(--bg)] cursor-pointer"
                                 >
                                   -
                                 </button>
@@ -1065,11 +539,11 @@
                                   value={quantity || ''}
                                   onChange={(e) => updateQuantity(p.id, Math.max(0, parseInt(e.target.value) || 0))}
                                   placeholder={`最小 ${p.minLot}`}
-                                  className="flex-1 min-w-[60px] h-8 text-center text-xs border border-[var(--border-color)] rounded focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+                                  className="flex-1 min-w-[60px] h-8 text-center text-xs border border-[var(--border-color)] rounded focus:outline-none focus:ring-1 focus:ring-[var(--primary)] bg-white text-[var(--text)]"
                                 />
                                 <button 
                                   onClick={() => updateQuantity(p.id, quantity === 0 ? p.minLot : quantity + 5)}
-                                  className="w-8 h-8 rounded border border-[var(--border-color)] bg-[var(--bg)] flex items-center justify-center font-bold hover:bg-[var(--primary)] hover:text-[var(--card-bg)] cursor-pointer"
+                                  className="w-8 h-8 rounded border border-[var(--border-color)] bg-[var(--bg)] flex items-center justify-center font-bold hover:bg-[var(--primary)] hover:text-[var(--bg)] cursor-pointer"
                                 >
                                   +
                                 </button>
@@ -1101,14 +575,14 @@
 
                 {/* Estimate Summary Box */}
                 {Object.values(favoriteCart).some(qty => qty > 0) && (
-                  <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-[var(--card-bg)] p-6 md:p-8 rounded-[var(--radius)] shadow-xl mt-12 transition-all duration-300">
+                  <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-6 md:p-8 rounded-[var(--radius)] shadow-xl mt-12">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                       <div className="space-y-1">
-                        <h4 className="text-lg md:text-xl font-bold">仕入れお見積り概算シミュレーション結果</h4>
-                        <p className="text-xs text-[var(--card-bg)]/80">※ロット数割引が適用された特別掛け率での試算合計になります。</p>
+                        <h4 className="text-lg md:text-xl font-bold text-white">仕入れお見積り概算シミュレーション結果</h4>
+                        <p className="text-xs text-white/80">※ロット数割引が適用された特別掛け率での試算合計になります。</p>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs text-[var(--card-bg)]/80 uppercase tracking-widest block mb-1">お見積もり合計 (税別)</span>
+                        <span className="text-xs text-white/80 uppercase tracking-widest block mb-1">お見積もり合計 (税別)</span>
                         <span className="text-3xl md:text-4xl font-black text-[var(--secondary)]">
                           ¥{PRODUCTS.reduce((acc, p) => acc + calculatePrice(p, favoriteCart[p.id] || 0), 0).toLocaleString()}
                         </span>
@@ -1134,57 +608,16 @@
               </div>
             </section>
 
-            {/* STYLE LAB & BRANDING INFORMATION */}
-            <section id="styles" className="py-20 px-6 md:px-12 max-w-7xl mx-auto space-y-12">
-              <div className="text-center space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Design Lab</span>
-                <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">「デザインスタイル」が演出する10色のブランディング力</h3>
-                <p className="text-xs md:text-sm text-[var(--text-muted)]">テイクオンが提案する、商材と顧客層の感性を繋ぎ止める10通りのアプローチ。</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                {THEME_PRESETS.map((t) => (
-                  <div 
-                    key={t.id} 
-                    onClick={() => handleThemeChange(t)}
-                    className={`p-5 rounded-[var(--radius)] border cursor-pointer transition-all duration-300 flex flex-col justify-between space-y-4 ${
-                      currentTheme.id === t.id 
-                        ? 'bg-[var(--primary)] text-[var(--card-bg)] border-[var(--primary)] shadow-md scale-105' 
-                        : 'bg-[var(--card-bg)] text-[var(--text)] border-[var(--border-color)] hover:border-[var(--primary)] hover:shadow'
-                    }`}
-                  >
-                    <div>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-bold uppercase tracking-wider opacity-80">{t.id}</span>
-                        <div className="flex gap-1">
-                          <span className="w-3 h-3 rounded-full border border-white/20" style={{ backgroundColor: t.primary }}></span>
-                          <span className="w-3 h-3 rounded-full border border-white/20" style={{ backgroundColor: t.secondary }}></span>
-                        </div>
-                      </div>
-                      <h4 className="text-sm font-extrabold">{t.jpName}</h4>
-                      <p className={`text-[10px] mt-2 leading-relaxed ${currentTheme.id === t.id ? 'text-white/80' : 'text-[var(--text-muted)]'}`}>
-                        {t.desc}
-                      </p>
-                    </div>
-
-                    <div className="pt-2 border-t border-[var(--border-color)]/20 text-[10px] flex justify-between items-center">
-                      <span className="opacity-70">適用する</span>
-                      <i className="lucide-chevron-right w-3 h-3"></i>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
+            {}
             {/* COMPANY PROFILE */}
-            <section id="profile" className="py-20 bg-[var(--card-bg)] border-t border-[var(--border-color)] transition-all duration-300">
+            <section id="profile" className="py-20 bg-[var(--card-bg)] border-t border-[var(--border-color)]">
               <div className="max-w-4xl mx-auto px-6 space-y-12">
                 <div className="text-center space-y-2">
                   <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Company Profile</span>
                   <h3 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">会社概要</h3>
                 </div>
 
-                <div className="border border-[var(--border-color)] rounded-[var(--radius)] overflow-hidden shadow-sm">
+                <div className="border border-[var(--border-color)] rounded-[var(--radius)] overflow-hidden shadow-sm bg-[var(--bg)]">
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
                     <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">商号</div>
                     <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">テイクオン株式会社 (TAKE ON Co., Ltd.)</div>
@@ -1217,6 +650,7 @@
               </div>
             </section>
 
+            {}
             {/* CONTACT FORM */}
             <section id="contact" className="py-20 px-6 md:px-12 max-w-4xl mx-auto space-y-12">
               <div className="text-center space-y-2">
@@ -1236,13 +670,13 @@
                   </p>
                   <button 
                     onClick={() => { setFormSubmitted(false); setContactForm({ name: "", email: "", company: "", message: "", category: "仕入れについて" }); }}
-                    className="mt-4 bg-[var(--primary)] text-[var(--card-bg)] px-6 py-2.5 rounded-[var(--radius)] text-xs font-bold"
+                    className="mt-4 bg-[var(--primary)] text-[var(--bg)] px-6 py-2.5 rounded-[var(--radius)] text-xs font-bold"
                   >
                     再送信フォームに戻る
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleContactSubmit} className="bg-[var(--card-bg)] p-6 md:p-8 rounded-[var(--radius)] border border-[var(--border-color)] shadow-[var(--shadow)] space-y-5 transition-colors duration-300">
+                <form onSubmit={handleContactSubmit} className="bg-[var(--card-bg)] p-6 md:p-8 rounded-[var(--radius)] border border-[var(--border-color)] shadow-[var(--shadow)] space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label className="block text-xs font-bold text-[var(--text)]">お名前 <span className="text-red-500">*</span></label>
@@ -1309,7 +743,7 @@
 
                   <button 
                     type="submit"
-                    className="w-full bg-[var(--primary)] hover:opacity-90 text-[var(--card-bg)] py-3 rounded-[var(--radius)] font-bold text-xs tracking-wider uppercase transition shadow-[var(--shadow)] cursor-pointer"
+                    className="w-full bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] py-3 rounded-[var(--radius)] font-bold text-xs tracking-wider uppercase transition shadow-[var(--shadow)] cursor-pointer"
                   >
                     入力内容を送信する (送信シミュレーション)
                   </button>
@@ -1330,8 +764,9 @@
               </div>
             )}
 
+            {}
             {/* FOOTER */}
-            <footer className="bg-slate-950 text-slate-400 py-12 px-6 md:px-12 border-t-8 border-[var(--primary)] transition-all duration-300">
+            <footer className="bg-slate-950 text-slate-400 py-12 px-6 md:px-12 border-t-8 border-[var(--primary)]">
               <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
@@ -1359,19 +794,10 @@
                 </div>
 
                 <div>
-                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">デザイン体験中</h5>
+                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">サイト情報</h5>
                   <p className="text-xs text-slate-500 leading-relaxed mb-2">
-                    現在、<strong>{currentTheme.jpName}</strong> を体験中です。上のパレットスイッチャーでお好みの世界観に。
+                    テイクオン株式会社の公式ブランドサイトです。本サイトのデザインは「オーガニック・エコ」テーマで最適化されています。
                   </p>
-                  <button 
-                    onClick={() => {
-                      const el = document.getElementById("style-selection-bar");
-                      if(el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="text-xs text-[var(--secondary)] font-bold hover:underline cursor-pointer"
-                  >
-                    → 別のテーマに着替える
-                  </button>
                 </div>
 
                 <div className="space-y-3">
@@ -1385,7 +811,7 @@
               </div>
 
               <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-900 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p>© 2026 TAKE ON Co., Ltd. All Rights Reserved. (Demo in AI Studio Platform)</p>
+                <p>© 2026 TAKE ON Co., Ltd. All Rights Reserved.</p>
                 <div className="flex gap-4">
                   <a href="#" className="hover:text-white transition">プライバシーポリシー</a>
                   <a href="#" className="hover:text-white transition">特定商取引法に基づく表記</a>
