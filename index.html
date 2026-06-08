@@ -8,7 +8,7 @@
     <!-- Tailwind CSS (Play CDN for flexible styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts for Organic Eco typography (Japanese Noto Sans) -->
+    <!-- Google Fonts for Organic Eco typography (Japanese Noto Sans & Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
         --text: #1c2514;          /* 視認性の良いオーガニックダーク */
         --text-muted: #6b7c5c;    /* ソフトなグリーングレー */
         --radius: 16px;           /* オーガニック特有の丸み */
-        --font-family: 'Noto Sans JP', sans-serif;
+        --font-family: 'Noto Sans JP', 'Inter', sans-serif;
         --shadow: 0 8px 30px rgba(45, 58, 36, 0.04);
         --border-color: #e3dbc9;
         --transition-speed: 0.3s;
@@ -78,76 +78,395 @@
     <script type="text/babel">
       const { useState, useEffect } = React;
 
-      // Simulated Product Catalog based on new simplified filenames
+      const TRANSLATIONS = {
+        ja: {
+          officialBadge: "OFFICIAL",
+          headerSlogan: "一般雑貨・美容健康用品 卸売「テイクオン株式会社」コーポレートサイト",
+          navConcept: "企業コンセプト",
+          navSegments: "事業紹介",
+          navCatalog: "仕入れカタログ",
+          navProfile: "会社概要",
+          contactUs: "お問い合わせ",
+          mainSlogan: "一般雑貨・美容健康用品 総合卸売",
+          heroHeadingNormal1: "確かな品質、",
+          heroHeadingAccent: "豊かな暮らしを",
+          heroHeadingNormal2: "、世界からあなたへ。",
+          heroDesc: "テイクオン株式会社は、国内外の厳選された一般雑貨および美容健康用品の卸売事業を展開しています。トレンドを先取りしたオーガニック・ナチュラルなプロダクトを、安定した流通ルートでお届けし、貴社のビジネス成長と顧客満足に貢献いたします。",
+          heroCta: "仕入れ・商品カタログを見る",
+          secGeneralGoodsTitle: "一般雑貨・服飾美容小物 卸売",
+          secGeneralGoodsDesc: "バッグ、財布、コスメ、フレグランス等の直輸入流通",
+          secNetworkTitle: "流通ネットワーク",
+          secNetworkValue: "150 +",
+          secNetworkDesc: "国内外の取引パートナー数",
+          secQualityTitle: "品質検査クリア",
+          secQualityValue: "100 %",
+          secQualityDesc: "全品国内二重検品基準",
+          secBeautyTitle: "美容健康用品 卸売",
+          secBeautyDesc: "アロマ、オーガニック製品、サプリメントの提供",
+          secBadgeText: "ロット単位の価格交渉対応",
+          secBadgeSlogan: "品質最優先の流通",
+          conceptSub: "Corporate Concept",
+          conceptTitle: "「テイクオン」がもたらすビジネスの挑戦と飛躍",
+          conceptDesc: "テイクオン（Take On）という社名には、「新たな可能性へ挑戦し、引き受ける」という強い意志が込められています。変化の激しい現代市場において、私たちは確固たる目利き力で選別した「一般雑貨」と「美容健康用品」を通じて、小売店様・EC事業者様の仕入れプロセスをシンプル化し、信頼の品質を担保し続けます。",
+          conceptFeat1Title: "1. グローバルな調達力",
+          conceptFeat1Desc: "ヨーロッパ、アジア各国のメーカーと直接提携し、中間マージンをカット。市場競争力の高い独占・優良商材をいち早く調達します。",
+          conceptFeat2Title: "2. 徹底した品質と検品体制",
+          conceptFeat2Desc: "美容健康用品や日常雑貨だからこそ、成分の安全性と外観の品質に妥協はありません。国内倉庫にて厳格な検査を実施後に配送します。",
+          conceptFeat3Title: "3. 小ロット・柔軟なB2B協業",
+          conceptFeat3Desc: "スタートアップEC様や個人サロン様でもスムーズに買い付けが始められるよう、各商品の最小ロット数を柔軟に最適化しています。",
+          bizSub: "Our Business",
+          bizTitle: "テイクオンが展開する2つの卸売コア事業",
+          bizDesc: "トレンドと本質を見極めた、洗練されたプロダクトラインナップ。",
+          bizSeg1Title: "生活雑貨・服飾・美容コスメ卸売事業",
+          bizSeg1Desc: "日々の生活に美しい彩りと豊かさをプラスする、高感度な雑貨類のセレクト。プレミアムレザーバッグ、ウォレット、ラグジュアリー香水、メイクアップ小物など、デザイン性と実用性を両立した「選ばれる理由」のある商品を幅広く調達・供給しております。",
+          bizSeg1L1: "海外の流行コスメ・香水の独自輸入ルート",
+          bizSeg1L2: "高品質なレザーアイテム・ファッション服飾小物",
+          bizSeg1L3: "季節ニーズに合わせた生活便利アイテムのOEM提案",
+          bizSeg1Cta: "一般雑貨カタログを絞り込む",
+          bizSeg2Title: "美容健康・セルフウェルネス用品卸売事業",
+          bizSeg2Desc: "心身の安らぎと真のヘルスケアを提供するアロマ、オーガニック製品、サプリメントの専門卸売です。スタイリッシュなデザインの超音波セラミックディフューザー、自然の力を取り込むハーブティー、国内GMP認証工場での厳格な生産工程に基づくサプリメントなど、ウェルネス志向の高い現代社会に必要とされる最高水準の商材を取り扱っております。",
+          bizSeg2L1: "インテリアに溶け込む上質なアロマディフューザー機器",
+          bizSeg2L2: "オーガニックかつトレーサビリティの取れたハーブ・精油類",
+          bizSeg2L3: "現代人の美と調和を支えるオリジナルサプリメントの卸販売",
+          bizSeg2Cta: "美容健康カタログを絞り込む",
+          catSub: "B2B Showroom",
+          catTitle: "商品カタログ 兼 仕入れ見積シミュレーター",
+          catDesc: "ロット数を選択するだけで、大口割引（ボリュームディスカウント）をリアルタイムに試算できます。",
+          tabAll: "すべて",
+          tabGeneral: "一般雑貨・コスメ",
+          tabBeauty: "美容健康",
+          tagGeneral: "一般雑貨・コスメ",
+          tagBeauty: "美容健康",
+          bulkDiscount: "大口割",
+          refWholesalePrice: "参考卸価格：",
+          unitTaxExcl: "/点 (税別)",
+          minLotQty: "最小仕入れ数：",
+          unitSuffix: "点〜",
+          simTitle: "仕入れ数量シミュレーション",
+          estSubtotal: "想定卸合計：",
+          taxExcl: "(税別)",
+          bulkApplied: "大口割引が適用されています",
+          bulkNextInfo1: "あと",
+          bulkNextInfo2: "点でさらに割引率アップ",
+          toastMinLot: "この商品の最小ロット数は {minLot}点 です",
+          toastContactReceived: "お問い合わせを受付いたしました。",
+          toastInputRequired: "必須項目をご入力ください。",
+          summaryTitle: "仕入れお見積り概算シミュレーション結果",
+          summaryDesc: "※ロット数割引が適用された特別掛け率での試算合計になります。",
+          summaryEstTotal: "お見積もり合計 (税別)",
+          summaryCta: "この見積もりで問い合わせる",
+          profileSub: "Company Profile",
+          profileTitle: "会社概要",
+          profNameLabel: "商号",
+          profNameVal: "テイクオン株式会社 (TAKE ON Co., Ltd.)",
+          profBizLabel: "事業内容",
+          profBizVal1: "・一般雑貨・服飾美容小物の輸入・卸売販売事業",
+          profBizVal2: "・美容健康用品・アロマ機器・健康食品サプリメントの輸入・卸売販売事業",
+          profBizVal3: "・国内外メーカーのOEM/ODM調達代行・プロデュース",
+          profRepLabel: "代表取締役",
+          profRepVal: "代表取締役社長 兼 CEO",
+          profEstLabel: "設立",
+          profEstVal: "2020年 10月",
+          profLocLabel: "本社所在地",
+          profLocVal: "〒260-0013 千葉県千葉市中央区中央2丁目（卸商品出荷拠点：千葉第一物流センター）",
+          profBankLabel: "主要取引銀行",
+          profBankVal: "三菱UFJ銀行、千葉銀行",
+          contactSub: "Contact us",
+          contactTitle: "仕入れ・提携のご相談はこちら",
+          contactDesc: "お取引ロットや卸価格に関するご相談など、お気軽にお問い合わせください。",
+          formSuccessTitle: "お問い合わせありがとうございます",
+          formSuccessDesc: "送信内容を正常に受付いたしました。1〜2営業日以内に、弊社卸売営業担当よりメールにてお取引条件の確認とご提案を差し上げます。",
+          formSuccessReset: "再送信フォームに戻る",
+          formLabelName: "お名前",
+          formLabelCompany: "貴社名 / ECショップ名",
+          formLabelEmail: "メールアドレス",
+          formLabelCategory: "お問い合わせ種別",
+          formLabelMessage: "お問い合わせ内容",
+          formRequired: "必須",
+          formSubmit: "入力内容を送信する (送信シミュレーション)",
+          formPlaceholderName: "山田 太郎",
+          formPlaceholderCompany: "株式会社〇〇",
+          formPlaceholderEmail: "example@takeon.co.jp",
+          formPlaceholderMessage: "新規取引条件や見積シミュレーション希望の商品など、具体的な要望をご記入ください。",
+          formOption1: "新規仕入れについて",
+          formOption2: "大口ロット見積のご依頼",
+          formOption3: "OEM製品開発に関するご相談",
+          formOption4: "メーカー様・輸出元様からのご提案",
+          formOption5: "その他",
+          toastSystemTitle: "システム通知",
+          footerSlogan: "世界中の「確かな品質」を、より迅速かつ安全に。雑貨・美容健康の専門総合卸売。",
+          footerCatTitle: "取扱カテゴリ",
+          footerCat1: "バッグ・ファッション小物",
+          footerCat2: "海外コスメ・プレミアム香水",
+          footerCat3: "アロマ機器・空間ディフューザー",
+          footerCat4: "健康食品・サプリメント",
+          footerSiteInfoTitle: "サイト情報",
+          footerSiteInfoDesc: "テイクオン株式会社の公式ブランドサイトです。本サイトのデザインは「オーガニック・エコ」テーマで最適化されています。",
+          footerOfficeTitle: "オフィス",
+          footerOfficeDesc: "〒264-0031 千葉県千葉市若葉区愛生町84\nE-mail: takeonec1@gmail.com",
+          footerPolicy: "プライバシーポリシー",
+          footerLaw: "特定商取引法に基づく表記",
+          inquireTemplatePrefix: "以下の商品の仕入れ見積を希望します。\n\n",
+          inquireTemplateSuffix: "\n\nその他ご要望等："
+        },
+        en: {
+          officialBadge: "OFFICIAL",
+          headerSlogan: "Corporate Website of Take On Co., Ltd. | Wholesaler of Daily Goods & Beauty/Health Products",
+          navConcept: "Concept",
+          navSegments: "Segments",
+          navCatalog: "B2B Catalog",
+          navProfile: "Profile",
+          contactUs: "Contact",
+          mainSlogan: "Comprehensive Wholesale of General Goods & Beauty/Health Products",
+          heroHeadingNormal1: "Reliable Quality,",
+          heroHeadingAccent: "Enriched Lives",
+          heroHeadingNormal2: ", from the World to You.",
+          heroDesc: "Take On Co., Ltd. conducts wholesale distribution of carefully curated general goods and wellness products imported from across the globe. We supply trend-setting organic and natural items via our robust logistics network, ensuring business growth and ultimate customer satisfaction.",
+          heroCta: "Browse B2B Catalog",
+          secGeneralGoodsTitle: "General Goods & Fashion Accessories",
+          secGeneralGoodsDesc: "Direct import and supply of premium bags, wallets, cosmetics, and fragrances.",
+          secNetworkTitle: "Global Network",
+          secNetworkValue: "150 +",
+          secNetworkDesc: "Active domestic & global retail partners",
+          secQualityTitle: "Strict Quality Inspection",
+          secQualityValue: "100 %",
+          secQualityDesc: "Rigorous double-inspection process in Japan",
+          secBeautyTitle: "Beauty & Health Products",
+          secBeautyDesc: "Premium essential aromatherapy oils, diffusers, and daily wellness items.",
+          secBadgeText: "Flexible Pricing per Wholesale Volume",
+          secBadgeSlogan: "Quality-First Sourcing",
+          conceptSub: "Corporate Concept",
+          conceptTitle: "Take On: Embracing Challenges for Shared Business Growth",
+          conceptDesc: "Our corporate name, \"Take On,\" represents our strong determination to take on new challenges and embrace vast opportunities. In today's dynamic global marketplace, we streamline procurement processes for retailers and e-commerce companies by supplying strictly curated, high-quality products.",
+          conceptFeat1Title: "1. Global Procurement",
+          conceptFeat1Desc: "By working directly with reliable factories across Europe and Asia, we eliminate middleman markups and secure competitive, high-margin product catalogs.",
+          conceptFeat2Title: "2. Absolute Quality Assurance",
+          conceptFeat2Desc: "We never compromise on product purity, ingredients, or craftsmanship. All units undergo meticulous standard checks in our domestic warehouses.",
+          conceptFeat3Title: "3. Startup-Friendly Low MOQs",
+          conceptFeat3Desc: "To lower operational barriers for boutique salons and emerging e-commerce platforms, we maintain exceptionally flexible, optimized minimum order quantities.",
+          bizSub: "Our Business",
+          bizTitle: "Two Core Pillars of Our Wholesale Operations",
+          bizDesc: "Providing highly functional, beautifully crafted, and trend-responsive selections.",
+          bizSeg1Title: "General Lifestyle Goods, Apparel & Cosmetics",
+          bizSeg1Desc: "Inject luxury, color, and premium aesthetic into daily routines. We curate top-tier merchandise, from Italian leather bags and functional accessories to niche perfumes and beauty tools.",
+          bizSeg1L1: "Direct & proprietary supply chains for international cosmetics",
+          bizSeg1L2: "Exquisite leatherware and lifestyle accessories",
+          bizSeg1L3: "Tailored OEM design offerings matching local market demands",
+          bizSeg1Cta: "Filter General Goods Catalog",
+          bizSeg2Title: "Wellness, Aromatherapy & Organic Health Products",
+          bizSeg2Desc: "Delivering tranquility and health-promoting everyday luxury. We offer modern ceramic diffusers, traceable certified organic herbal teas, and vitamins produced under strictly compliant Japanese GMP standards.",
+          bizSeg2L1: "Aesthetically pleasing ultrasonic humidifiers and diffusers",
+          bizSeg2L2: "Completely organic and traceable therapeutic essential oils",
+          bizSeg2L3: "Locally-crafted premium dietary supplements for skin & body",
+          bizSeg2Cta: "Filter Wellness & Health Catalog",
+          catSub: "B2B Showroom",
+          catTitle: "Interactive B2B Catalog & Pricing Simulator",
+          catDesc: "Adjust purchase quantities to witness high-volume discount calculations in real-time.",
+          tabAll: "All",
+          tabGeneral: "General Goods & Cosmetics",
+          tabBeauty: "Beauty & Health",
+          tagGeneral: "General Goods",
+          tagBeauty: "Beauty & Health",
+          bulkDiscount: "Bulk Disc.",
+          refWholesalePrice: "Wholesale Price:",
+          unitTaxExcl: "/unit (excl. tax)",
+          minLotQty: "Min. Order Qty (MOQ):",
+          unitSuffix: "units+",
+          simTitle: "Simulation: Order Quantity",
+          estSubtotal: "Estimated Subtotal:",
+          taxExcl: "(excl. tax)",
+          bulkApplied: "Bulk discount successfully applied!",
+          bulkNextInfo1: "Add ",
+          bulkNextInfo2: " more units to unlock a higher discount tier",
+          toastMinLot: "The minimum order quantity for this item is {minLot} units.",
+          toastContactReceived: "Inquiry successfully submitted.",
+          toastInputRequired: "Please fill out all required fields.",
+          summaryTitle: "B2B Order Estimate Summary",
+          summaryDesc: "*Prices shown reflect specialized bulk wholesale pricing based on selected tiers.",
+          summaryEstTotal: "Estimated Subtotal (excl. tax)",
+          summaryCta: "Proceed with this Estimate",
+          profileSub: "Company Profile",
+          profileTitle: "Company Profile",
+          profNameLabel: "Company Name",
+          profNameVal: "Take On Co., Ltd. (テイクオン株式会社)",
+          profBizLabel: "Line of Business",
+          profBizVal1: "- Import, distribution, and wholesale of general lifestyle goods, cosmetics, and accessories",
+          profBizVal2: "- Import, distribution, and wholesale of aromatherapy, dietary supplements, and beauty products",
+          profBizVal3: "- Global OEM/ODM product development, design consulting, and sourcing representation",
+          profRepLabel: "Management",
+          profRepVal: "President & Chief Executive Officer",
+          profEstLabel: "Established",
+          profEstVal: "October 2020",
+          profLocLabel: "Head Office",
+          profLocVal: "Chuo 2-chome, Chuo-ku, Chiba-shi, Chiba, 260-0013, Japan (Logistics: Chiba No.1 Center)",
+          profBankLabel: "Main Bankers",
+          profBankVal: "MUFG Bank, Ltd. / The Chiba Bank, Ltd.",
+          contactSub: "Contact us",
+          contactTitle: "Inquire About Wholesale Partnerships",
+          contactDesc: "Get in touch with us to request catalog details, custom wholesale quotes, or distribution rights.",
+          formSuccessTitle: "Thank You for Contacting Us",
+          formSuccessDesc: "Your submission has been received successfully. A dedicated sales account executive will reach out via email within 1-2 business days with custom-tailored proposals.",
+          formSuccessReset: "Submit Another Inquiry",
+          formLabelName: "Your Name",
+          formLabelCompany: "Company / Store Name",
+          formLabelEmail: "Email Address",
+          formLabelCategory: "Inquiry Type",
+          formLabelMessage: "Inquiry Details",
+          formRequired: "Required",
+          formSubmit: "Send Inquiry (Simulation)",
+          formPlaceholderName: "John Doe",
+          formPlaceholderCompany: "Company Name, Ltd.",
+          formPlaceholderEmail: "john.doe@example.com",
+          formPlaceholderMessage: "Please provide specific quantities, desired product models, or custom design requirements.",
+          formOption1: "New Wholesale Account Inquiry",
+          formOption2: "Bulk Order & Wholesale Quote",
+          formOption3: "OEM/ODM Consultation",
+          formOption4: "Supplier/Manufacturer Pitch",
+          formOption5: "Other Inquiry",
+          toastSystemTitle: "System Notification",
+          footerSlogan: "Bringing reliable quality from around the globe directly to your business with speed and integrity.",
+          footerCatTitle: "Product Categories",
+          footerCat1: "Bags & Fashion Accessories",
+          footerCat2: "Imported Cosmetics & Fragrances",
+          footerCat3: "Aromatic Devices & Diffusers",
+          footerCat4: "GMP Dietary Supplements",
+          footerSiteInfoTitle: "About This Site",
+          footerSiteInfoDesc: "Official brand portal for Take On Co., Ltd. Optimized in an eco-organic premium design motif.",
+          footerOfficeTitle: "Office",
+          footerOfficeDesc: "84 Aiseicho, Wakaba-ku, Chiba City, Chiba, 264-0031, Japan\nE-mail: takeonec1@gmail.com",
+          footerPolicy: "Privacy Policy",
+          footerLaw: "Merchant Legal Information",
+          inquireTemplatePrefix: "I would like to inquire about purchasing the following products:\n\n",
+          inquireTemplateSuffix: "\n\nAdditional Requirements / Comments:"
+        }
+      };
+
       const PRODUCTS = [
         {
           id: "gen-01",
           category: "general",
-          name: "プレミアムイタリアンレザー・ハンドバッグ",
-          desc: "テイクオンが独自ルートで直輸入する、最高級イタリアンレザーを使用した極上のハンドバッグ。滑らかな触り心地と耐久性を兼ね備えています。",
-          spec: "素材: 本牛革（イタリア製）/ サイズ: W28×H20×D12cm / カラー: クラシックトープ",
           basePrice: 12000,
           minLot: 10,
-          img: "general_goods.png"
+          img: "general_goods.png",
+          ja: {
+            name: "プレミアムイタリアンレザー・ハンドバッグ",
+            desc: "テイクオンが独自ルートで直輸入する、最高級イタリアンレザーを使用した極上のハンドバッグ。滑らかな触り心地と耐久性を兼ね備えています。",
+            spec: "素材: 本牛革（イタリア製）/ サイズ: W28×H20×D12cm / カラー: クラシックトープ"
+          },
+          en: {
+            name: "Premium Italian Leather Handbag",
+            desc: "An exquisite handbag crafted from premium Italian leather, imported directly through our proprietary channels. It features a silky-smooth texture combined with superior durability.",
+            spec: "Material: Genuine Cowhide (Made in Italy) / Size: W28 x H20 x D12 cm / Color: Classic Taupe"
+          }
         },
         {
           id: "gen-02",
           category: "general",
-          name: "シルクブレンド・エレガントスカーフ",
-          desc: "大人の気品を引き立てる繊細なタッチのスカーフ。アクセサリーとしても、バッグのチャームとしても幅広く活躍します。",
-          spec: "素材: シルク 60%, モダール 40% / サイズ: 70×70cm / 生産国: イタリア",
           basePrice: 2800,
           minLot: 20,
-          img: "general_goods.png"
+          img: "general_goods.png",
+          ja: {
+            name: "シルクブレンド・エレガントスカーフ",
+            desc: "大人の気品を引き立てる繊細なタッチのスカーフ。アクセサリーとしても、バッグのチャームとしても幅広く活躍します。",
+            spec: "素材: シルク 60%, モダール 40% / サイズ: 70×70cm / 生産国: イタリア"
+          },
+          en: {
+            name: "Elegant Silk Blend Scarf",
+            desc: "A delicately textured scarf that enhances sophisticated elegance. Highly versatile, it can be styled as a neck accessory or a charming bag accent.",
+            spec: "Material: 60% Silk, 40% Modal / Size: 70 x 70 cm / Origin: Italy"
+          }
         },
         {
           id: "gen-03",
           category: "general",
-          name: "エッセンシャルオーガニック・セラム",
-          desc: "自然由来成分のみで配合された高級美容液。肌にすばやく浸透し、内側から押し返すような潤いとハリを与えます。",
-          spec: "容量: 50ml / 主成分: アルガンオイル, ホホバ種子油, ヒアルロン酸",
           basePrice: 3500,
           minLot: 15,
-          img: "general_goods.png"
+          img: "general_goods.png",
+          ja: {
+            name: "エッセンシャルオーガニック・セラム",
+            desc: "自然由来成分のみで配合された高級美容液。肌にすばやく浸透し、内側から押し返すような潤いとハリを与えます。",
+            spec: "容量: 50ml / 主成分: アルガンオイル, ホホバ種子油, ヒアルロン酸"
+          },
+          en: {
+            name: "Essential Organic Beauty Serum",
+            desc: "A luxurious beauty serum formulated exclusively with naturally derived ingredients. It quickly penetrates the skin, restoring moisture and plump firmness from within.",
+            spec: "Volume: 50ml / Main Ingredients: Argan Oil, Jojoba Seed Oil, Hyaluronic Acid"
+          }
         },
         {
           id: "bh-01",
           category: "beauty",
-          name: "IONA プレミアムセラミックアロマディフューザー",
-          desc: "超音波による超微細ミストで空間を満たす、陶器製のハイエンドアロマディフューザー。空間のテイストを選ばない美しいフォルムです。",
-          spec: "消費電力: 12W / 水タンク容量: 150ml / 適用畳数: 最大12畳 / LEDライト搭載",
           basePrice: 4800,
           minLot: 10,
-          img: "beauty_health.png"
+          img: "beauty_health.png",
+          ja: {
+            name: "IONA プレミアムセラミックアロマディフューザー",
+            desc: "超音波による超微細ミストで空間を満たす、陶器製のハイエンドアロマディフューザー。空間のテイストを選ばない美しいフォルムです。",
+            spec: "消費電力: 12W / 水タンク容量: 150ml / 適用畳数: 最大12畳 / LEDライト搭載"
+          },
+          en: {
+            name: "IONA Premium Ceramic Aroma Diffuser",
+            desc: "An ultrasonic, high-end ceramic diffuser that envelops your space in super-fine aromatic mist. Its sculptural design effortlessly complements any interior style.",
+            spec: "Power: 12W / Tank: 150ml / Coverage: Max 20 m² / Features: Built-in LED Mood Light"
+          }
         },
         {
           id: "bh-02",
           category: "beauty",
-          name: "ナチュラル・インナーウェルネス サプリメント",
-          desc: "現代人の偏りがちな栄養バランスを整え、活力をチャージする高品質サプリメントシリーズ。安心の国内GMP認定工場生産。",
-          spec: "ラインナップ: VITALITY, IMMUNITY BOOST, OMEGA-3, DIGESTIVE ENZYMES / 内容量: 60粒入り",
           basePrice: 1800,
           minLot: 50,
-          img: "beauty_health.png"
+          img: "beauty_health.png",
+          ja: {
+            name: "ナチュラル・インナーウェルネス サプリメント",
+            desc: "現代人の偏りがちな栄養バランスを整え、活力をチャージする高品質サプリメントシリーズ。安心の国内GMP認定工場生産。",
+            spec: "ラインナップ: VITALITY, IMMUNITY BOOST, OMEGA-3, DIGESTIVE ENZYMES / 内容量: 60粒入り"
+          },
+          en: {
+            name: "Natural Inner Wellness Supplements",
+            desc: "A premium dietary supplement line crafted to optimize daily nutritional balance and restore natural vitality. Produced securely in a GMP-certified factory in Japan.",
+            spec: "Varieties: VITALITY, IMMUNITY BOOST, OMEGA-3, DIGESTIVE ENZYMES / Volume: 60 Capsules"
+          }
         },
         {
           id: "bh-03",
           category: "beauty",
-          name: "オーガニックハーブ・デトックスティー",
-          desc: "世界中から集めた厳選ハーブを使用。心も身体もぽかぽかに温まり、すっきりとした毎日をサポートするリフレッシュブレンドです。",
-          spec: "内容量: ティーバッグ20包入り / 原材料: レモングラス, ミント, カモミール, ルイボス",
           basePrice: 950,
           minLot: 30,
-          img: "beauty_health.png"
+          img: "beauty_health.png",
+          ja: {
+            name: "オーガニックハーブ・デトックスティー",
+            desc: "世界中から集めた厳選ハーブを使用。心も身体もぽかぽかに温まり、すっきりとした毎日をサポートするリフレッシュブレンドです。",
+            spec: "内容量: ティーバッグ20包入り / 原材料: レモングラス, ミント, カモミール, ルイボス"
+          },
+          en: {
+            name: "Organic Herbal Detox Tea",
+            desc: "A soothing refreshing blend crafted with premium botanicals sourced worldwide. It gently warms the mind and body while promoting daily metabolic balance.",
+            spec: "Volume: 20 Tea Bags / Ingredients: Lemongrass, Peppermint, Chamomile, Rooibos"
+          }
         }
       ];
 
       function App() {
+        const [lang, setLang] = useState("ja");
         const [activeTab, setActiveTab] = useState("all");
         const [favoriteCart, setFavoriteCart] = useState({});
-        const [contactForm, setContactForm] = useState({ name: "", email: "", company: "", message: "", category: "仕入れについて" });
+        const [contactForm, setContactForm] = useState({ name: "", email: "", company: "", message: "", category: "wholesale" });
         const [formSubmitted, setFormSubmitted] = useState(false);
         const [toast, setToast] = useState(null);
+
+        // Helper translation function
+        const t = (key) => {
+          return TRANSLATIONS[lang][key] || TRANSLATIONS["ja"][key] || key;
+        };
+
+        const CATEGORY_KEYS = ["wholesale", "bulk", "oem", "supplier", "other"];
+
+        // Dynamic icon creation on render updates
+        useEffect(() => {
+          if (window.lucide) {
+            window.lucide.createIcons();
+          }
+        }, [activeTab, favoriteCart, formSubmitted, toast, lang]);
 
         const showToastMessage = (msg) => {
           setToast(msg);
@@ -158,7 +477,7 @@
         const updateQuantity = (productId, qty) => {
           const product = PRODUCTS.find(p => p.id === productId);
           if (qty < product.minLot && qty !== 0) {
-            showToastMessage(`この商品の最小ロット数は ${product.minLot}点 です`);
+            showToastMessage(t('toastMinLot').replace('{minLot}', product.minLot));
             qty = product.minLot;
           }
           setFavoriteCart(prev => ({
@@ -187,11 +506,11 @@
         const handleContactSubmit = (e) => {
           e.preventDefault();
           if (!contactForm.name || !contactForm.email || !contactForm.message) {
-            showToastMessage("必須項目をご入力ください。");
+            showToastMessage(t('toastInputRequired'));
             return;
           }
           setFormSubmitted(true);
-          showToastMessage("お問い合わせを受付いたしました。");
+          showToastMessage(t('toastContactReceived'));
         };
 
         const filteredProducts = activeTab === "all" 
@@ -201,43 +520,59 @@
         return (
           <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}>
             
-            {}
             {/* Top Premium Notification Bar */}
             <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white text-xs md:text-sm py-2.5 px-6 flex justify-between items-center z-50 shadow-inner">
               <div className="flex items-center gap-2 overflow-hidden truncate">
-                <span className="bg-[var(--secondary)] text-[var(--primary)] font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">OFFICIAL</span>
-                <span className="truncate font-medium">一般雑貨・美容健康用品 卸売「テイクオン株式会社」コーポレートサイト</span>
+                <span className="bg-[var(--secondary)] text-[var(--primary)] font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">{t('officialBadge')}</span>
+                <span className="truncate font-medium">{t('headerSlogan')}</span>
               </div>
             </div>
 
             {/* Navigation Header */}
+            {}
             <header className="sticky top-0 z-40 backdrop-blur-md bg-[var(--card-bg)]/90 border-b border-[var(--border-color)] py-4 px-6 md:px-12 flex justify-between items-center transition-colors duration-300">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-[var(--secondary)] flex items-center justify-center font-bold text-lg shadow-md">
                   TO
                 </div>
                 <div>
-                  <h1 className="text-lg md:text-xl font-bold tracking-tight text-[var(--primary)] uppercase">テイクオン株式会社</h1>
+                  <h1 className="text-lg md:text-xl font-bold tracking-tight text-[var(--primary)] uppercase">{t('profNameVal')}</h1>
                   <p className="text-[10px] tracking-widest text-[var(--text-muted)]">TAKE ON Co., Ltd.</p>
                 </div>
               </div>
 
-              <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#about" className="hover:text-[var(--secondary)] transition-colors">企業コンセプト</a>
-                <a href="#segments" className="hover:text-[var(--secondary)] transition-colors">事業紹介</a>
-                <a href="#products" className="hover:text-[var(--secondary)] transition-colors">仕入れカタログ</a>
-                <a href="#profile" className="hover:text-[var(--secondary)] transition-colors">会社情報</a>
+              <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+                <a href="#about" className="hover:text-[var(--secondary)] transition-colors">{t('navConcept')}</a>
+                <a href="#segments" className="hover:text-[var(--secondary)] transition-colors">{t('navSegments')}</a>
+                <a href="#products" className="hover:text-[var(--secondary)] transition-colors">{t('navCatalog')}</a>
+                <a href="#profile" className="hover:text-[var(--secondary)] transition-colors">{t('navProfile')}</a>
               </nav>
 
-              <div className="flex items-center gap-3">
-                <a href="#contact" className="bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-5 py-2.5 text-xs font-bold tracking-wider rounded-[var(--radius)] uppercase transition shadow-[var(--shadow)]">
-                  お問い合わせ
+              <div className="flex items-center gap-4">
+                {/* Language Switcher */}
+                <div className="flex items-center gap-1 bg-[var(--primary)]/5 p-1 rounded-full border border-[var(--border-color)]">
+                  <button 
+                    onClick={() => setLang("ja")} 
+                    className={`px-3 py-1 text-xs font-bold rounded-full transition-all cursor-pointer ${lang === 'ja' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
+                  >
+                    JP
+                  </button>
+                  <button 
+                    onClick={() => setLang("en")} 
+                    className={`px-3 py-1 text-xs font-bold rounded-full transition-all cursor-pointer ${lang === 'en' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
+                  >
+                    EN
+                  </button>
+                </div>
+
+                <a href="#contact" className="bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-4 md:px-5 py-2.5 text-xs font-bold tracking-wider rounded-[var(--radius)] uppercase transition shadow-[var(--shadow)]">
+                  {t('contactUs')}
                 </a>
               </div>
             </header>
 
-            {}
             {/* HERO SECTION */}
+            {}
             <section className="relative overflow-hidden pt-12 pb-20 md:py-24 px-6 md:px-12 flex-1">
               <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
@@ -245,22 +580,22 @@
                 <div className="lg:col-span-6 space-y-6">
                   <div className="inline-flex items-center gap-2 bg-[var(--primary)]/5 border border-[var(--primary)]/10 text-[var(--primary)] px-3 py-1.5 rounded-full text-xs font-bold">
                     <i className="lucide-award w-3.5 h-3.5 text-[var(--secondary)]"></i>
-                    <span>一般雑貨・美容健康用品 総合卸売</span>
+                    <span>{t('mainSlogan')}</span>
                   </div>
                   
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.15] tracking-tight text-[var(--primary)]">
-                    確かな品質、<br/>
-                    <span className="text-[var(--secondary)]">豊かな暮らしを</span>、<br/>
-                    世界からあなたへ。
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black leading-[1.15] tracking-tight text-[var(--primary)]">
+                    {t('heroHeadingNormal1')}<br/>
+                    <span className="text-[var(--secondary)]">{t('heroHeadingAccent')}</span>
+                    {t('heroHeadingNormal2')}
                   </h2>
 
                   <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed max-w-lg">
-                    テイクオン株式会社は、国内外の厳選された一般雑貨および美容健康用品の卸売事業を展開しています。トレンドを先取りしたオーガニック・ナチュラルなプロダクトを、安定した流通ルートでお届けし、貴社のビジネス成長と顧客満足に貢献いたします。
+                    {t('heroDesc')}
                   </p>
 
                   <div className="flex flex-wrap items-center gap-4 pt-2">
                     <a href="#products" className="bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-8 py-3.5 rounded-[var(--radius)] font-bold text-sm shadow-[var(--shadow)] transition flex items-center gap-2">
-                      <span>仕入れ・商品カタログを見る</span>
+                      <span>{t('heroCta')}</span>
                       <i className="lucide-arrow-right w-4 h-4"></i>
                     </a>
                   </div>
@@ -275,41 +610,41 @@
                       <div className="relative group overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                         <img 
                           src="general_goods.png" 
-                          alt="一般雑貨コラージュ" 
+                          alt="General Goods Collage" 
                           className="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end text-white">
                           <span className="text-[9px] uppercase tracking-wider text-[var(--secondary)] font-bold">General Goods</span>
-                          <h4 className="text-xs md:text-sm font-bold">一般雑貨・服飾美容小物 卸売</h4>
-                          <p className="text-[10px] opacity-85 mt-1 line-clamp-1">バッグ、財布、コスメ、フレグランス等の直輸入流通</p>
+                          <h4 className="text-xs md:text-sm font-bold">{t('secGeneralGoodsTitle')}</h4>
+                          <p className="text-[10px] opacity-85 mt-1 line-clamp-1">{t('secGeneralGoodsDesc')}</p>
                         </div>
                       </div>
                       
                       <div className="bg-[var(--card-bg)] p-4 rounded-[var(--radius)] border border-[var(--border-color)] shadow-[var(--shadow)] text-center">
-                        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-semibold">流通ネットワーク</p>
-                        <h4 className="text-xl font-black mt-1 text-[var(--primary)]">150 +</h4>
-                        <p className="text-[10px] text-[var(--text-muted)]">国内外の取引パートナー数</p>
+                        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-semibold">{t('secNetworkTitle')}</p>
+                        <h4 className="text-xl font-black mt-1 text-[var(--primary)]">{t('secNetworkValue')}</h4>
+                        <p className="text-[10px] text-[var(--text-muted)]">{t('secNetworkDesc')}</p>
                       </div>
                     </div>
 
                     {/* Beauty & Health Collage Box */}
                     <div className="col-span-5 space-y-4 pt-8 animate-float" style={{ animationDelay: '2s' }}>
                       <div className="bg-[var(--card-bg)] p-4 rounded-[var(--radius)] border border-[var(--border-color)] shadow-[var(--shadow)] text-center">
-                        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-semibold">品質検査クリア</p>
-                        <h4 className="text-xl font-black mt-1 text-[var(--primary)]">100 %</h4>
-                        <p className="text-[10px] text-[var(--text-muted)]">全品国内二重検品基準</p>
+                        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-semibold">{t('secQualityTitle')}</p>
+                        <h4 className="text-xl font-black mt-1 text-[var(--primary)]">{t('secQualityValue')}</h4>
+                        <p className="text-[10px] text-[var(--text-muted)]">{t('secQualityDesc')}</p>
                       </div>
 
                       <div className="relative group overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                         <img 
                           src="beauty_health.png" 
-                          alt="美容健康用品コラージュ" 
+                          alt="Beauty Health Collage" 
                           className="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end text-white">
                           <span className="text-[9px] uppercase tracking-wider text-[var(--secondary)] font-bold">Beauty & Health</span>
-                          <h4 className="text-xs md:text-sm font-bold">美容健康用品 卸売</h4>
-                          <p className="text-[10px] opacity-85 mt-1 line-clamp-1">アロマ、オーガニック製品、サプリメントの提供</p>
+                          <h4 className="text-xs md:text-sm font-bold">{t('secBeautyTitle')}</h4>
+                          <p className="text-[10px] opacity-85 mt-1 line-clamp-1">{t('secBeautyDesc')}</p>
                         </div>
                       </div>
                     </div>
@@ -320,8 +655,8 @@
                   <div className="absolute -bottom-6 -left-6 bg-[var(--primary)] text-[var(--bg)] px-6 py-4 rounded-[var(--radius)] shadow-xl hidden sm:flex items-center gap-3 border border-[var(--border-color)]">
                     <div className="w-2.5 h-2.5 rounded-full bg-[var(--secondary)] animate-ping"></div>
                     <div>
-                      <p className="text-[10px] text-white/60 font-semibold uppercase tracking-wider">品質最優先の流通</p>
-                      <p className="text-xs font-bold">ロット単位の価格交渉対応</p>
+                      <p className="text-[10px] text-white/60 font-semibold uppercase tracking-wider">{t('secBadgeSlogan')}</p>
+                      <p className="text-xs font-bold">{t('secBadgeText')}</p>
                     </div>
                   </div>
                 </div>
@@ -329,18 +664,17 @@
               </div>
             </section>
 
-            {}
             {/* CONCEPT SECTION (About Us) */}
+            {}
             <section id="about" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)]">
               <div className="max-w-5xl mx-auto px-6 text-center space-y-8">
                 <div className="space-y-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Corporate Concept</span>
-                  <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">「テイクオン」がもたらすビジネスの挑戦と飛躍</h3>
+                  <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">{t('conceptSub')}</span>
+                  <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">{t('conceptTitle')}</h3>
                 </div>
                 
                 <p className="text-sm md:text-lg text-[var(--text-muted)] leading-relaxed max-w-3xl mx-auto">
-                  テイクオン（Take On）という社名には、「新たな可能性へ挑戦し、引き受ける」という強い意志が込められています。
-                  変化の激しい現代市場において、私たちは確固たる目利き力で選別した「一般雑貨」と「美容健康用品」を通じて、小売店様・EC事業者様の仕入れプロセスをシンプル化し、信頼の品質を担保し続けます。
+                  {t('conceptDesc')}
                 </p>
 
                 {/* Features Highlights */}
@@ -349,9 +683,9 @@
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-globe w-5 h-5"></i>
                     </div>
-                    <h5 className="text-base font-bold">1. グローバルな調達力</h5>
+                    <h5 className="text-base font-bold">{t('conceptFeat1Title')}</h5>
                     <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                      ヨーロッパ、アジア各国のメーカーと直接提携し、中間マージンをカット。市場競争力の高い独占・優良商材をいち早く調達します。
+                      {t('conceptFeat1Desc')}
                     </p>
                   </div>
 
@@ -359,9 +693,9 @@
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-shield-check w-5 h-5"></i>
                     </div>
-                    <h5 className="text-base font-bold">2. 徹底した品質と検品体制</h5>
+                    <h5 className="text-base font-bold">{t('conceptFeat2Title')}</h5>
                     <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                      美容健康用品や日常雑貨だからこそ、成分の安全性と外観の品質に妥協はありません。国内倉庫にて厳格な検査を実施後に配送します。
+                      {t('conceptFeat2Desc')}
                     </p>
                   </div>
 
@@ -369,22 +703,22 @@
                     <div className="w-10 h-10 rounded-full bg-[var(--primary)]/5 text-[var(--primary)] flex items-center justify-center">
                       <i className="lucide-users w-5 h-5"></i>
                     </div>
-                    <h5 className="text-base font-bold">3. 小ロット・柔軟なB2B協業</h5>
+                    <h5 className="text-base font-bold">{t('conceptFeat3Title')}</h5>
                     <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                      スタートアップEC様や個人サロン様でもスムーズに買い付けが始められるよう、各商品の最小ロット数を柔軟に最適化しています。
+                      {t('conceptFeat3Desc')}
                     </p>
                   </div>
                 </div>
               </div>
             </section>
 
-            {}
             {/* BUSINESS SEGMENTS */}
+            {}
             <section id="segments" className="py-20 px-6 md:px-12 max-w-7xl mx-auto space-y-16">
               <div className="text-center space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Our Business</span>
-                <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">テイクオンが展開する2つの卸売コア事業</h3>
-                <p className="text-xs md:text-sm text-[var(--text-muted)]">トレンドと本質を見極めた、洗練されたプロダクトラインナップ。</p>
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">{t('bizSub')}</span>
+                <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">{t('bizTitle')}</h3>
+                <p className="text-xs md:text-sm text-[var(--text-muted)]">{t('bizDesc')}</p>
               </div>
 
               {/* Segment 1: General Goods */}
@@ -392,23 +726,23 @@
                 <div className="lg:col-span-6 overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                   <img 
                     src="general_goods.png" 
-                    alt="一般雑貨事業" 
+                    alt="General Goods Segment" 
                     className="w-full h-[300px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
                   />
                 </div>
                 <div className="lg:col-span-6 space-y-6">
                   <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Segment 01</span>
-                  <h4 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">生活雑貨・服飾・美容コスメ卸売事業</h4>
+                  <h4 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">{t('bizSeg1Title')}</h4>
                   <p className="text-sm text-[var(--text-muted)] leading-relaxed">
-                    日々の生活に美しい彩りと豊かさをプラスする、高感度な雑貨類のセレクト。プレミアムレザーバッグ、ウォレット、ラグジュアリー香水、メイクアップ小物など、デザイン性と実用性を両立した「選ばれる理由」のある商品を幅広く調達・供給しております。
+                    {t('bizSeg1Desc')}
                   </p>
                   <ul className="space-y-2 text-xs md:text-sm text-[var(--text-muted)] font-medium">
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 海外の流行コスメ・香水の独自輸入ルート</li>
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 高品質なレザーアイテム・ファッション服飾小物</li>
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 季節ニーズに合わせた生活便利アイテムのOEM提案</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg1L1')}</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg1L2')}</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg1L3')}</li>
                   </ul>
                   <a href="#products" onClick={() => setActiveTab("general")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
-                    一般雑貨カタログを絞り込む
+                    {t('bizSeg1Cta')}
                   </a>
                 </div>
               </div>
@@ -418,37 +752,37 @@
                 <div className="lg:col-span-6 lg:order-2 overflow-hidden rounded-[var(--radius)] shadow-lg border border-[var(--border-color)]">
                   <img 
                     src="beauty_health.png" 
-                    alt="美容健康事業" 
+                    alt="Beauty & Health Segment" 
                     className="w-full h-[300px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
                   />
                 </div>
                 <div className="lg:col-span-6 lg:order-1 space-y-6">
                   <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Segment 02</span>
-                  <h4 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">美容健康・セルフウェルネス用品卸売事業</h4>
+                  <h4 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">{t('bizSeg2Title')}</h4>
                   <p className="text-sm text-[var(--text-muted)] leading-relaxed">
-                    心身の安らぎと真のヘルスケアを提供するアロマ、オーガニック製品、サプリメントの専門卸売です。スタイリッシュなデザインの超音波セラミックディフューザー、自然の力を取り込むハーブティー、国内GMP認証工場での厳格な生産工程に基づくサプリメントなど、ウェルネス志向の高い現代社会に必要とされる最高水準の商材を取り扱っております。
+                    {t('bizSeg2Desc')}
                   </p>
                   <ul className="space-y-2 text-xs md:text-sm text-[var(--text-muted)] font-medium">
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> インテリアに溶け込む上質なアロマディフューザー機器</li>
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> オーガニックかつトレーサビリティの取れたハーブ・精油類</li>
-                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> 現代人の美と調和を支えるオリジナルサプリメントの卸販売</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg2L1')}</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg2L2')}</li>
+                    <li className="flex items-center gap-2"><i className="lucide-check-circle-2 w-4 h-4 text-[var(--secondary)]"></i> {t('bizSeg2L3')}</li>
                   </ul>
                   <a href="#products" onClick={() => setActiveTab("beauty")} className="inline-flex bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] px-6 py-3 rounded-[var(--radius)] text-xs font-bold tracking-wider uppercase transition">
-                    美容健康カタログを絞り込む
+                    {t('bizSeg2Cta')}
                   </a>
                 </div>
               </div>
             </section>
 
-            {}
             {/* INTERACTIVE CATALOG & B2B SIMULATOR */}
+            {}
             <section id="products" className="py-20 bg-[var(--card-bg)] border-t border-b border-[var(--border-color)]">
               <div className="max-w-7xl mx-auto px-6 space-y-12">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                   <div className="space-y-2">
-                    <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">B2B Showroom</span>
-                    <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">商品カタログ 兼 仕入れ見積シミュレーター</h3>
-                    <p className="text-xs md:text-sm text-[var(--text-muted)]">ロット数を選択するだけで、大口割引（ボリュームディスカウント）をリアルタイムに試算できます。</p>
+                    <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">{t('catSub')}</span>
+                    <h3 className="text-2xl md:text-4xl font-extrabold text-[var(--primary)]">{t('catTitle')}</h3>
+                    <p className="text-xs md:text-sm text-[var(--text-muted)]">{t('catDesc')}</p>
                   </div>
 
                   {/* Filter tabs */}
@@ -457,19 +791,19 @@
                       onClick={() => setActiveTab("all")} 
                       className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'all' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
-                      すべて
+                      {t('tabAll')}
                     </button>
                     <button 
                       onClick={() => setActiveTab("general")} 
                       className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'general' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
-                      一般雑貨・コスメ
+                      {t('tabGeneral')}
                     </button>
                     <button 
                       onClick={() => setActiveTab("beauty")} 
                       className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all cursor-pointer ${activeTab === 'beauty' ? 'bg-[var(--primary)] text-[var(--bg)] shadow-sm' : 'text-[var(--text)] hover:opacity-80'}`}
                     >
-                      美容健康
+                      {t('tabBeauty')}
                     </button>
                   </div>
                 </div>
@@ -481,6 +815,7 @@
                     const isSelected = quantity > 0;
                     const calculatedTotal = calculatePrice(p, quantity);
                     const discountRate = calculateDiscountPercentage(p, quantity);
+                    const itemData = p[lang] || p["ja"];
 
                     return (
                       <div 
@@ -493,15 +828,15 @@
                         <div className="relative h-48 overflow-hidden bg-slate-100 border-b border-[var(--border-color)]">
                           <img 
                             src={p.img} 
-                            alt={p.name} 
+                            alt={itemData.name} 
                             className="w-full h-full object-cover object-center"
                           />
                           <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[var(--primary)] text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm">
-                            {p.category === 'general' ? '一般雑貨・コスメ' : '美容健康'}
+                            {p.category === 'general' ? t('tagGeneral') : t('tagBeauty')}
                           </span>
                           {discountRate > 0 && (
                             <span className="absolute top-3 right-3 bg-[var(--secondary)] text-[var(--primary)] text-[10px] font-black px-2.5 py-1 rounded-full shadow-md animate-bounce">
-                              大口割 {discountRate}% OFF
+                              {t('bulkDiscount')} {discountRate}% OFF
                             </span>
                           )}
                         </div>
@@ -509,24 +844,24 @@
                         {/* Product details */}
                         <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                           <div className="space-y-2">
-                            <h4 className="text-base font-extrabold leading-snug">{p.name}</h4>
-                            <p className="text-xs text-[var(--text-muted)] leading-relaxed line-clamp-3">{p.desc}</p>
-                            <p className="text-[10px] text-[var(--text-muted)] bg-[var(--card-bg)] p-2 rounded border border-[var(--border-color)] font-sans">{p.spec}</p>
+                            <h4 className="text-base font-extrabold leading-snug">{itemData.name}</h4>
+                            <p className="text-xs text-[var(--text-muted)] leading-relaxed line-clamp-3">{itemData.desc}</p>
+                            <p className="text-[10px] text-[var(--text-muted)] bg-[var(--card-bg)] p-2 rounded border border-[var(--border-color)] font-sans">{itemData.spec}</p>
                           </div>
 
                           <div className="pt-2 border-t border-[var(--border-color)] space-y-3">
                             <div className="flex justify-between items-center text-xs">
-                              <span className="text-[var(--text-muted)]">参考卸価格：</span>
-                              <span className="font-bold text-sm text-[var(--primary)]">¥{p.basePrice.toLocaleString()} <span className="text-[10px] font-normal text-[var(--text-muted)]">/点 (税別)</span></span>
+                              <span className="text-[var(--text-muted)]">{t('refWholesalePrice')}</span>
+                              <span className="font-bold text-sm text-[var(--primary)]">¥{p.basePrice.toLocaleString()} <span className="text-[10px] font-normal text-[var(--text-muted)]">{t('unitTaxExcl')}</span></span>
                             </div>
                             <div className="flex justify-between items-center text-xs">
-                              <span className="text-[var(--text-muted)]">最小仕入れ数：</span>
-                              <span className="font-bold text-[var(--secondary)]">{p.minLot}点〜</span>
+                              <span className="text-[var(--text-muted)]">{t('minLotQty')}</span>
+                              <span className="font-bold text-[var(--secondary)]">{p.minLot}{t('unitSuffix')}</span>
                             </div>
 
                             {/* Dynamic Lot Counter Inputs */}
                             <div className="space-y-2 bg-[var(--card-bg)] p-3 rounded-[var(--radius)] border border-[var(--border-color)] shadow-inner">
-                              <label className="block text-[10px] font-bold text-[var(--text-muted)] uppercase">仕入れ数量シミュレーション</label>
+                              <label className="block text-[10px] font-bold text-[var(--text-muted)] uppercase">{t('simTitle')}</label>
                               <div className="flex items-center gap-2">
                                 <button 
                                   onClick={() => updateQuantity(p.id, Math.max(0, quantity - (quantity === p.minLot ? p.minLot : 5)))}
@@ -538,7 +873,7 @@
                                   type="number"
                                   value={quantity || ''}
                                   onChange={(e) => updateQuantity(p.id, Math.max(0, parseInt(e.target.value) || 0))}
-                                  placeholder={`最小 ${p.minLot}`}
+                                  placeholder={`${lang === 'ja' ? '最小' : 'Min'} ${p.minLot}`}
                                   className="flex-1 min-w-[60px] h-8 text-center text-xs border border-[var(--border-color)] rounded focus:outline-none focus:ring-1 focus:ring-[var(--primary)] bg-white text-[var(--text)]"
                                 />
                                 <button 
@@ -552,15 +887,19 @@
                               {/* Price output */}
                               {quantity > 0 && (
                                 <div className="mt-2 pt-2 border-t border-[var(--border-color)] flex justify-between items-center text-xs">
-                                  <span className="text-[var(--text-muted)]">想定卸合計：</span>
+                                  <span className="text-[var(--text-muted)]">{t('estSubtotal')}</span>
                                   <div className="text-right">
                                     <div className="font-black text-[var(--primary)] text-sm">
-                                      ¥{calculatedTotal.toLocaleString()} <span className="text-[9px] font-normal text-[var(--text-muted)]">(税別)</span>
+                                      ¥{calculatedTotal.toLocaleString()} <span className="text-[9px] font-normal text-[var(--text-muted)]">{t('taxExcl')}</span>
                                     </div>
                                     {discountRate > 0 ? (
-                                      <span className="text-[10px] text-[var(--secondary)] font-extrabold block">大口割引が適用されています</span>
+                                      <span className="text-[10px] text-[var(--secondary)] font-extrabold block">{t('bulkApplied')}</span>
                                     ) : (
-                                      <span className="text-[9px] text-[var(--text-muted)] block">あと{(p.minLot * 2) - quantity > 0 ? (p.minLot * 2) - quantity : (p.minLot * 5) - quantity}点でさらに割引率アップ</span>
+                                      <span className="text-[9px] text-[var(--text-muted)] block">
+                                        {t('bulkNextInfo1')}
+                                        {((quantity < p.minLot * 2) ? (p.minLot * 2) - quantity : (p.minLot * 5) - quantity)}
+                                        {t('bulkNextInfo2')}
+                                      </span>
                                     )}
                                   </div>
                                 </div>
@@ -578,11 +917,11 @@
                   <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-6 md:p-8 rounded-[var(--radius)] shadow-xl mt-12">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                       <div className="space-y-1">
-                        <h4 className="text-lg md:text-xl font-bold text-white">仕入れお見積り概算シミュレーション結果</h4>
-                        <p className="text-xs text-white/80">※ロット数割引が適用された特別掛け率での試算合計になります。</p>
+                        <h4 className="text-lg md:text-xl font-bold text-white">{t('summaryTitle')}</h4>
+                        <p className="text-xs text-white/80">{t('summaryDesc')}</p>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs text-white/80 uppercase tracking-widest block mb-1">お見積もり合計 (税別)</span>
+                        <span className="text-xs text-white/80 uppercase tracking-widest block mb-1">{t('summaryEstTotal')}</span>
                         <span className="text-3xl md:text-4xl font-black text-[var(--secondary)]">
                           ¥{PRODUCTS.reduce((acc, p) => acc + calculatePrice(p, favoriteCart[p.id] || 0), 0).toLocaleString()}
                         </span>
@@ -591,15 +930,15 @@
                         <a 
                           href="#contact" 
                           onClick={() => {
-                            const items = PRODUCTS.filter(p => favoriteCart[p.id] > 0).map(p => `${p.name} x ${favoriteCart[p.id]}点`).join("\n");
+                            const items = PRODUCTS.filter(p => favoriteCart[p.id] > 0).map(p => `${p[lang].name} x ${favoriteCart[p.id]}${t('unitSuffix')}`).join("\n");
                             setContactForm(prev => ({
                               ...prev,
-                              message: `以下の商品の仕入れ見積を希望します。\n\n${items}\n\nその他ご要望等：`
+                              message: `${t('inquireTemplatePrefix')}${items}${t('inquireTemplateSuffix')}`
                             }));
                           }}
                           className="bg-[var(--secondary)] text-[var(--primary)] hover:opacity-95 font-bold px-6 py-3 rounded-[var(--radius)] text-sm shadow transition block text-center"
                         >
-                          この見積もりで問い合わせる
+                          {t('summaryCta')}
                         </a>
                       </div>
                     </div>
@@ -608,55 +947,55 @@
               </div>
             </section>
 
-            {}
             {/* COMPANY PROFILE */}
+            {}
             <section id="profile" className="py-20 bg-[var(--card-bg)] border-t border-[var(--border-color)]">
               <div className="max-w-4xl mx-auto px-6 space-y-12">
                 <div className="text-center space-y-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Company Profile</span>
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">会社概要</h3>
+                  <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">{t('profileSub')}</span>
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">{t('profileTitle')}</h3>
                 </div>
 
                 <div className="border border-[var(--border-color)] rounded-[var(--radius)] overflow-hidden shadow-sm bg-[var(--bg)]">
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">商号</div>
-                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">テイクオン株式会社 (TAKE ON Co., Ltd.)</div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profNameLabel')}</div>
+                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">{t('profNameVal')}</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">事業内容</div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profBizLabel')}</div>
                     <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium space-y-1.5">
-                      <p>・一般雑貨・服飾美容小物の輸入・卸売販売事業</p>
-                      <p>・美容健康用品・アロマ機器・健康食品サプリメントの輸入・卸売販売事業</p>
-                      <p>・国内外メーカーのOEM/ODM調達代行・プロデュース</p>
+                      <p>{t('profBizVal1')}</p>
+                      <p>{t('profBizVal2')}</p>
+                      <p>{t('profBizVal3')}</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">代表取締役</div>
-                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">代表取締役社長 兼 CEO </div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profRepLabel')}</div>
+                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">{t('profRepVal')}</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">設立</div>
-                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">2020年 10月</div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profEstLabel')}</div>
+                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">{t('profEstVal')}</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[var(--border-color)] text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">本社所在地</div>
-                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">〒260-0013 千葉県千葉市中央区中央2丁目（卸商品出荷拠点：千葉第一物流センター）</div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profLocLabel')}</div>
+                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">{t('profLocVal')}</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-12 text-xs md:text-sm">
-                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">主要取引銀行</div>
-                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">三菱UFJ銀行、千葉銀行</div>
+                    <div className="md:col-span-4 bg-[var(--primary)]/5 p-4 font-bold text-[var(--primary)]">{t('profBankLabel')}</div>
+                    <div className="md:col-span-8 p-4 bg-white text-[var(--text)] font-medium">{t('profBankVal')}</div>
                   </div>
                 </div>
               </div>
             </section>
 
-            {}
             {/* CONTACT FORM */}
+            {}
             <section id="contact" className="py-20 px-6 md:px-12 max-w-4xl mx-auto space-y-12">
               <div className="text-center space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">Contact us</span>
-                <h3 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">仕入れ・提携のご相談はこちら</h3>
-                <p className="text-xs md:text-sm text-[var(--text-muted)]">お取引ロットや卸価格に関するご相談など、お気軽にお問い合わせください。</p>
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary)]">{t('contactSub')}</span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-[var(--primary)]">{t('contactTitle')}</h3>
+                <p className="text-xs md:text-sm text-[var(--text-muted)]">{t('contactDesc')}</p>
               </div>
 
               {formSubmitted ? (
@@ -664,38 +1003,40 @@
                   <div className="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto text-2xl">
                     <i className="lucide-check"></i>
                   </div>
-                  <h4 className="text-lg font-bold text-emerald-800">お問い合わせありがとうございます</h4>
+                  <h4 className="text-lg font-bold text-emerald-800">{t('formSuccessTitle')}</h4>
                   <p className="text-sm text-emerald-600 leading-relaxed max-w-md mx-auto">
-                    送信内容を正常に受付いたしました。1〜2営業日以内に、弊社卸売営業担当よりメールにてお取引条件の確認とご提案を差し上げます。
+                    {t('formSuccessDesc')}
                   </p>
                   <button 
-                    onClick={() => { setFormSubmitted(false); setContactForm({ name: "", email: "", company: "", message: "", category: "仕入れについて" }); }}
-                    className="mt-4 bg-[var(--primary)] text-[var(--bg)] px-6 py-2.5 rounded-[var(--radius)] text-xs font-bold"
+                    onClick={() => { setFormSubmitted(false); setContactForm({ name: "", email: "", company: "", message: "", category: "wholesale" }); }}
+                    className="mt-4 bg-[var(--primary)] text-[var(--bg)] px-6 py-2.5 rounded-[var(--radius)] text-xs font-bold cursor-pointer"
                   >
-                    再送信フォームに戻る
+                    {t('formSuccessReset')}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="bg-[var(--card-bg)] p-6 md:p-8 rounded-[var(--radius)] border border-[var(--border-color)] shadow-[var(--shadow)] space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="block text-xs font-bold text-[var(--text)]">お名前 <span className="text-red-500">*</span></label>
+                      <label className="block text-xs font-bold text-[var(--text)]">
+                        {t('formLabelName')} <span className="text-red-500">*</span>
+                      </label>
                       <input 
                         type="text" 
                         required
                         value={contactForm.name}
                         onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
-                        placeholder="山田 太郎"
+                        placeholder={t('formPlaceholderName')}
                         className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="block text-xs font-bold text-[var(--text)]">貴社名 / ECショップ名</label>
+                      <label className="block text-xs font-bold text-[var(--text)]">{t('formLabelCompany')}</label>
                       <input 
                         type="text" 
                         value={contactForm.company}
                         onChange={(e) => setContactForm({...contactForm, company: e.target.value})}
-                        placeholder="株式会社〇〇"
+                        placeholder={t('formPlaceholderCompany')}
                         className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
                       />
                     </div>
@@ -703,40 +1044,44 @@
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="block text-xs font-bold text-[var(--text)]">メールアドレス <span className="text-red-500">*</span></label>
+                      <label className="block text-xs font-bold text-[var(--text)]">
+                        {t('formLabelEmail')} <span className="text-red-500">*</span>
+                      </label>
                       <input 
                         type="email" 
                         required
                         value={contactForm.email}
                         onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                        placeholder="example@takeon.co.jp"
+                        placeholder={t('formPlaceholderEmail')}
                         className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="block text-xs font-bold text-[var(--text)]">お問い合わせ種別</label>
+                      <label className="block text-xs font-bold text-[var(--text)]">{t('formLabelCategory')}</label>
                       <select 
                         value={contactForm.category}
                         onChange={(e) => setContactForm({...contactForm, category: e.target.value})}
-                        className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+                        className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)] text-[var(--text)]"
                       >
-                        <option>新規仕入れについて</option>
-                        <option>大口ロット見積のご依頼</option>
-                        <option>OEM製品開発に関するご相談</option>
-                        <option>メーカー様・輸出元様からのご提案</option>
-                        <option>その他</option>
+                        {CATEGORY_KEYS.map((key, idx) => (
+                          <option key={key} value={key}>
+                            {t(`formOption${idx + 1}`)}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="block text-xs font-bold text-[var(--text)]">お問い合わせ内容 <span className="text-red-500">*</span></label>
+                    <label className="block text-xs font-bold text-[var(--text)]">
+                      {t('formLabelMessage')} <span className="text-red-500">*</span>
+                    </label>
                     <textarea 
                       required
                       rows="5"
                       value={contactForm.message}
                       onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                      placeholder="新規取引条件や見積シミュレーション希望の商品など、具体的な要望をご記入ください。"
+                      placeholder={t('formPlaceholderMessage')}
                       className="w-full bg-[var(--bg)] border border-[var(--border-color)] rounded-[var(--radius)] px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
                     ></textarea>
                   </div>
@@ -745,7 +1090,7 @@
                     type="submit"
                     className="w-full bg-[var(--primary)] hover:opacity-90 text-[var(--bg)] py-3 rounded-[var(--radius)] font-bold text-xs tracking-wider uppercase transition shadow-[var(--shadow)] cursor-pointer"
                   >
-                    入力内容を送信する (送信シミュレーション)
+                    {t('formSubmit')}
                   </button>
                 </form>
               )}
@@ -758,14 +1103,14 @@
                   i
                 </div>
                 <div>
-                  <p className="text-xs font-bold">システム通知</p>
+                  <p className="text-xs font-bold">{t('toastSystemTitle')}</p>
                   <p className="text-xs text-slate-300 mt-1 leading-snug">{toast}</p>
                 </div>
               </div>
             )}
 
-            {}
             {/* FOOTER */}
+            {}
             <footer className="bg-slate-950 text-slate-400 py-12 px-6 md:px-12 border-t-8 border-[var(--primary)]">
               <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="space-y-4">
@@ -774,37 +1119,36 @@
                       TO
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">テイクオン株式会社</h4>
+                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">{t('profNameVal')}</h4>
                       <p className="text-[9px] tracking-wider text-slate-500">TAKE ON Co., Ltd.</p>
                     </div>
                   </div>
                   <p className="text-xs leading-relaxed text-slate-500">
-                    世界中の「確かな品質」を、より迅速かつ安全に。雑貨・美容健康の専門総合卸売。
+                    {t('footerSlogan')}
                   </p>
                 </div>
                 
                 <div>
-                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">取扱カテゴリ</h5>
+                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">{t('footerCatTitle')}</h5>
                   <ul className="space-y-2 text-xs">
-                    <li><a href="#products" onClick={() => setActiveTab("general")} className="hover:text-white transition">バッグ・ファッション小物</a></li>
-                    <li><a href="#products" onClick={() => setActiveTab("general")} className="hover:text-white transition">海外コスメ・プレミアム香水</a></li>
-                    <li><a href="#products" onClick={() => setActiveTab("beauty")} className="hover:text-white transition">アロマ機器・空間ディフューザー</a></li>
-                    <li><a href="#products" onClick={() => setActiveTab("beauty")} className="hover:text-white transition">健康食品・サプリメント</a></li>
+                    <li><a href="#products" onClick={() => setActiveTab("general")} className="hover:text-white transition">{t('footerCat1')}</a></li>
+                    <li><a href="#products" onClick={() => setActiveTab("general")} className="hover:text-white transition">{t('footerCat2')}</a></li>
+                    <li><a href="#products" onClick={() => setActiveTab("beauty")} className="hover:text-white transition">{t('footerCat3')}</a></li>
+                    <li><a href="#products" onClick={() => setActiveTab("beauty")} className="hover:text-white transition">{t('footerCat4')}</a></li>
                   </ul>
                 </div>
 
                 <div>
-                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">サイト情報</h5>
+                  <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">{t('footerSiteInfoTitle')}</h5>
                   <p className="text-xs text-slate-500 leading-relaxed mb-2">
-                    テイクオン株式会社の公式ブランドサイトです。本サイトのデザインは「オーガニック・エコ」テーマで最適化されています。
+                    {t('footerSiteInfoDesc')}
                   </p>
                 </div>
 
                 <div className="space-y-3">
-                  <h5 className="text-xs font-bold text-white uppercase tracking-wider">オフィス</h5>
-                  <p className="text-xs leading-relaxed text-slate-500">
-                    〒264-0031 千葉県千葉市若葉区愛生町84<br/>
-                    E-mail: takeonec1@gmail.com
+                  <h5 className="text-xs font-bold text-white uppercase tracking-wider">{t('footerOfficeTitle')}</h5>
+                  <p className="text-xs leading-relaxed text-slate-500 whitespace-pre-line">
+                    {t('footerOfficeDesc')}
                   </p>
                 </div>
               </div>
@@ -812,8 +1156,8 @@
               <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-900 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <p>© 2026 TAKE ON Co., Ltd. All Rights Reserved.</p>
                 <div className="flex gap-4">
-                  <a href="#" className="hover:text-white transition">プライバシーポリシー</a>
-                  <a href="#" className="hover:text-white transition">特定商取引法に基づく表記</a>
+                  <a href="#" className="hover:text-white transition">{t('footerPolicy')}</a>
+                  <a href="#" className="hover:text-white transition">{t('footerLaw')}</a>
                 </div>
               </div>
             </footer>
