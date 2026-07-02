@@ -482,24 +482,24 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
             <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">お名前</span><span class="lang-en hidden">Full Name</span> <span class="text-red-500">*</span></label>
-            <input type="text" required placeholder="山田 太郎" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
+            <input type="text" name="name" required placeholder="山田 太郎" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
           </div>
           <div class="space-y-1">
             <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">貴社名 / 店舗名</span><span class="lang-en hidden">Company / Shop Name</span></label>
-            <input type="text" placeholder="株式会社〇〇" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
+            <input type="text" name="company" placeholder="株式会社〇〇" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
             <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">メールアドレス</span><span class="lang-en hidden">Email Address</span> <span class="text-red-500">*</span></label>
-            <input type="email" required placeholder="example@takeon.co.jp" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
+            <input type="email" name="email" required placeholder="example@takeon.co.jp" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
           </div>
         </div>
 
         <div class="space-y-1">
           <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">お問い合わせ内容</span><span class="lang-en hidden">Message Details</span> <span class="text-red-500">*</span></label>
-          <textarea id="form-message" required rows="5" placeholder="貴店の立地や、検討されている商材・ロットなど、具体的な要望をご記入ください。" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]"></textarea>
+          <textarea id="form-message" name="message" required rows="5" placeholder="貴店の立地や、検討されている商材・ロットなど、具体的な要望をご記入ください。" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]"></textarea>
         </div>
 
         <button type="submit" class="w-full bg-[#2d3a24] hover:opacity-90 text-[#fbf9f5] py-3 rounded-[16px] font-bold text-xs tracking-wider uppercase transition shadow-md cursor-pointer">
@@ -604,11 +604,42 @@
         });
       }
 
-      // 4. お問い合わせフォーム送信シミュレーション
-      function handleFormSubmit(e) {
+      // 4. お問い合わせフォーム送信（/api/contact へPOST）
+      async function handleFormSubmit(e) {
         e.preventDefault();
-        document.getElementById('contact-form').classList.add('hidden');
-        document.getElementById('form-success-msg').classList.remove('hidden');
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "送信中...";
+
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData);
+
+        try {
+          console.log("送信開始:", payload);
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const result = await res.json();
+          console.log("送信結果:", result);
+
+          if (result.ok) {
+            form.classList.add('hidden');
+            document.getElementById('form-success-msg').classList.remove('hidden');
+          } else {
+            alert("送信に失敗しました。時間をおいて再度お試しください。");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        } catch (err) {
+          console.error("送信エラー:", err);
+          alert("通信エラーが発生しました。");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
 
       // アイコン自動初期化
