@@ -390,21 +390,6 @@
                 <p class="text-xs text-[#6b7c5c] leading-relaxed line-clamp-3"><span class="lang-ja">店頭展示引揚品のため、驚異的な集客フックとして活用可能です。ブランド価値を落とさず、圧倒的プライスで売り切れます。</span><span class="lang-en hidden">Store-display returns, perfect as foot-traffic drivers. Sell out at aggressive prices without diluting brand equity.</span></p>
                 <p class="text-[10px] text-[#6b7c5c] bg-[#f4efe6] p-2 rounded border border-[#e3dbc9] font-sans"><span class="lang-ja">状態: 店頭引揚品（B級品含む） / アソート</span><span class="lang-en hidden">Status: Store Returns (B-Grade included) / Assorted</span></p>
               </div>
-              <div class="pt-2 border-t border-[#e3dbc9] space-y-3">
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">参考卸価格：</span><span class="lang-en hidden">Wholesale Price:</span></span><span class="font-bold text-[#2d3a24]">¥100〜1,000 <span class="text-[10px] font-normal text-[#6b7c5c]"><span class="lang-ja">/点〜</span><span class="lang-en hidden">/unit+</span></span></span></div>
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">最小仕入れ数：</span><span class="lang-en hidden">MOQ:</span></span><span class="font-bold text-[#c2a373]">50<span class="lang-ja">点〜</span><span class="lang-en hidden"> units+</span></span></div>
-                <div class="space-y-2 bg-[#f4efe6] p-3 rounded-[16px] border border-[#e3dbc9]">
-                  <div class="flex items-center gap-2">
-                    <button onclick="updateQty('gen-01', -10, 50)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">-</button>
-                    <input type="number" id="qty-gen-01" oninput="calculateTotal()" placeholder="0" class="flex-1 min-w-[60px] h-8 text-center text-xs border border-[#e3dbc9] rounded bg-[#fbf9f5] font-sans">
-                    <button onclick="updateQty('gen-01', 10, 50)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">+</button>
-                  </div>
-                  <div id="row-gen-01" class="hidden text-xs pt-1 border-t border-[#e3dbc9]/60 flex justify-between items-center">
-                    <span class="text-[#6b7c5c]"><span class="lang-ja">卸合計：</span><span class="lang-en hidden">Subtotal:</span></span>
-                    <div class="text-right"><span id="total-gen-01" class="font-black text-[#2d3a24]">¥0</span><span id="discount-gen-01"></span></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -418,21 +403,6 @@
                 <h4 class="text-base font-extrabold leading-snug"><span class="lang-ja" id="name-ja-gen-02">季節の便利家電・電動工具</span><span class="lang-en hidden" id="name-en-gen-02">Seasonal Appliances & Tools</span></h4>
                 <p class="text-xs text-[#6b7c5c] leading-relaxed line-clamp-3"><span class="lang-ja">ホームセンター等のトレンド実売に基づいた、回転の速い実用アイテム。確実な需要を捉える定番品です。</span><span class="lang-en hidden">Practical, high-turnover items based on real market trends from home centers. Capture consistent demand.</span></p>
                 <p class="text-[10px] text-[#6b7c5c] bg-[#f4efe6] p-2 rounded border border-[#e3dbc9] font-sans"><span class="lang-ja">カテゴリ: 生活家電 / DIY / 工具</span><span class="lang-en hidden">Category: Home Appliances / DIY / Tools</span></p>
-              </div>
-              <div class="pt-2 border-t border-[#e3dbc9] space-y-3">
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">参考卸価格：</span><span class="lang-en hidden">Wholesale Price:</span></span><span class="font-bold text-[#2d3a24]">特価 <span class="text-[10px] font-normal text-[#6b7c5c]"><span class="lang-ja">/要問合せ</span><span class="lang-en hidden">/Inquire</span></span></span></div>
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">最小仕入れ数：</span><span class="lang-en hidden">MOQ:</span></span><span class="font-bold text-[#c2a373]">10<span class="lang-ja">点〜</span><span class="lang-en hidden"> units+</span></span></div>
-                <div class="space-y-2 bg-[#f4efe6] p-3 rounded-[16px] border border-[#e3dbc9]">
-                  <div class="flex items-center gap-2">
-                    <button onclick="updateQty('gen-02', -5, 10)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">-</button>
-                    <input type="number" id="qty-gen-02" oninput="calculateTotal()" placeholder="0" class="flex-1 min-w-[60px] h-8 text-center text-xs border border-[#e3dbc9] rounded bg-[#fbf9f5] font-sans">
-                    <button onclick="updateQty('gen-02', 5, 10)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">+</button>
-                  </div>
-                  <div id="row-gen-02" class="hidden text-xs pt-1 border-t border-[#e3dbc9]/60 flex justify-between items-center">
-                    <span class="text-[#6b7c5c]"><span class="lang-ja">卸合計：</span><span class="lang-en hidden">Subtotal:</span></span>
-                    <div class="text-right"><span id="total-gen-02" class="font-black text-[#2d3a24]">¥0</span><span id="discount-gen-02"></span></div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -448,49 +418,6 @@
                 <p class="text-xs text-[#6b7c5c] leading-relaxed line-clamp-3"><span class="lang-ja">リピーターの付きやすい独自開発のサプリメント。健康感度が高い層に向けた、確かな手応えの商品です。</span><span class="lang-en hidden">Our exclusively developed supplements with high repeat rates. Designed for health-conscious customers seeking real results.</span></p>
                 <p class="text-[10px] text-[#6b7c5c] bg-[#f4efe6] p-2 rounded border border-[#e3dbc9] font-sans"><span class="lang-ja">成分: 厳選黒素材ブレンド / 内容量: 90粒</span><span class="lang-en hidden">Ingredients: Select Black Materials Blend / 90 Capsules</span></p>
               </div>
-              <div class="pt-2 border-t border-[#e3dbc9] space-y-3">
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">参考卸価格：</span><span class="lang-en hidden">Wholesale Price:</span></span><span class="font-bold text-[#2d3a24]">会員公開 <span class="text-[10px] font-normal text-[#6b7c5c]"><span class="lang-ja">/要ログイン</span><span class="lang-en hidden">/Login Required</span></span></span></div>
-                <div class="flex justify-between items-center text-xs"><span><span class="lang-ja">最小仕入れ数：</span><span class="lang-en hidden">MOQ:</span></span><span class="font-bold text-[#c2a373]">30<span class="lang-ja">点〜</span><span class="lang-en hidden"> units+</span></span></div>
-                <div class="space-y-2 bg-[#f4efe6] p-3 rounded-[16px] border border-[#e3dbc9]">
-                  <div class="flex items-center gap-2">
-                    <button onclick="updateQty('bh-01', -5, 30)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">-</button>
-                    <input type="number" id="qty-bh-01" oninput="calculateTotal()" placeholder="0" class="flex-1 min-w-[60px] h-8 text-center text-xs border border-[#e3dbc9] rounded bg-[#fbf9f5] font-sans">
-                    <button onclick="updateQty('bh-01', 5, 30)" class="w-8 h-8 rounded border border-[#e3dbc9] bg-[#fbf9f5] flex items-center justify-center font-bold hover:bg-[#2d3a24] hover:text-[#fbf9f5] cursor-pointer">+</button>
-                  </div>
-                  <div id="row-bh-01" class="hidden text-xs pt-1 border-t border-[#e3dbc9]/60 flex justify-between items-center">
-                    <span class="text-[#6b7c5c]"><span class="lang-ja">卸合計：</span><span class="lang-en hidden">Subtotal:</span></span>
-                    <div class="text-right"><span id="total-bh-01" class="font-black text-[#2d3a24]">¥0</span><span id="discount-bh-01"></span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="summary-box" class="hidden bg-[#2d3a24] text-[#fbf9f5] p-6 md:p-8 rounded-[16px] shadow-xl mt-12 transition-all">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div class="space-y-1">
-              <h4 class="text-lg md:text-xl font-bold">
-                <span class="lang-ja">仕入れお見積り概算シミュレーション結果</span>
-                <span class="lang-en hidden">Wholesale Estimate Simulator Results</span>
-              </h4>
-              <p class="text-xs text-[#fbf9f5]/80">
-                <span class="lang-ja">※ロット数割引が適用された特別掛け率での試算合計になります。</span>
-                <span class="lang-en hidden">*Includes custom volume discount rates according to lot tier.</span>
-              </p>
-            </div>
-            <div class="text-right">
-              <span class="text-xs text-[#fbf9f5]/80 uppercase tracking-widest block mb-1">
-                <span class="lang-ja">お見積もり合計 (税別)</span>
-                <span class="lang-en hidden">Estimated Total (Excl. Tax)</span>
-              </span>
-              <span id="grand-total-display" class="text-3xl md:text-4xl font-black text-[#c2a373]">¥0</span>
-            </div>
-            <div class="shrink-0">
-              <button id="submit-quote-btn" class="bg-[#c2a373] text-[#2d3a24] hover:opacity-95 font-bold px-6 py-3 rounded-[16px] text-sm shadow transition block text-center cursor-pointer w-full">
-                <span class="lang-ja">この見積もりで問い合わせる</span>
-                <span class="lang-en hidden">Submit Inquiries for This Quote</span>
-              </button>
             </div>
           </div>
         </div>
@@ -518,14 +445,6 @@
             <div class="md:col-span-8 p-4 text-[#1c2514] font-medium"><span class="lang-ja">〒264-0031　千葉県千葉市若葉区愛生町84</span><span class="lang-en hidden">84 Aio-cho, Wakaba-ku, Chiba City 264-0031</span></div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-12 border-b border-[#e3dbc9] text-xs md:text-sm">
-            <div class="md:col-span-4 bg-[#2d3a24]/5 p-4 font-bold text-[#2d3a24]"><span class="lang-ja">出荷拠点</span><span class="lang-en hidden">Logistics Center</span></div>
-            <div class="md:col-span-8 p-4 text-[#1c2514] font-medium"><span class="lang-ja">千葉県千葉市若葉区愛生町84（テイクオン物流センター）</span><span class="lang-en hidden">84 Aio-cho, Wakaba-ku, Chiba City (Take On Logistics)</span></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 border-b border-[#e3dbc9] text-xs md:text-sm">
-            <div class="md:col-span-4 bg-[#2d3a24]/5 p-4 font-bold text-[#2d3a24]"><span class="lang-ja">親会社</span><span class="lang-en hidden">Parent Company</span></div>
-            <div class="md:col-span-8 p-4 text-[#1c2514] font-medium"><span class="lang-ja">株式会社ウッドストック（100%出資）</span><span class="lang-en hidden">Woodstock Co., Ltd. (100% Subsidiary)</span></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 border-b border-[#e3dbc9] text-xs md:text-sm">
             <div class="md:col-span-4 bg-[#2d3a24]/5 p-4 font-bold text-[#2d3a24]"><span class="lang-ja">グループ会社</span><span class="lang-en hidden">Group Company</span></div>
             <div class="md:col-span-8 p-4 text-[#1c2514] font-medium"><span class="lang-ja">株式会社ウッドストック</span><span class="lang-en hidden">Woodstock Co., Ltd.</span></div>
           </div>
@@ -541,7 +460,7 @@
       <div class="text-center space-y-2">
         <span class="text-xs font-bold uppercase tracking-widest text-[#c2a373]">Contact us</span>
         <h3 class="text-2xl md:text-3xl font-extrabold text-[#2d3a24]">
-          <span class="lang-ja">仕入れ・提携のご相談はこちら</span>
+          <span class="lang-ja">お問合せ</span>
           <span class="lang-en hidden">Inquiry & Partnership Form</span>
         </h3>
         <p class="text-xs md:text-sm text-[#6b7c5c]">
@@ -575,14 +494,6 @@
           <div class="space-y-1">
             <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">メールアドレス</span><span class="lang-en hidden">Email Address</span> <span class="text-red-500">*</span></label>
             <input type="email" required placeholder="example@takeon.co.jp" class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
-          </div>
-          <div class="space-y-1">
-            <label class="block text-xs font-bold text-[#1c2514]"><span class="lang-ja">お問い合わせ種別</span><span class="lang-en hidden">Inquiry Category</span></label>
-            <select class="w-full bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] px-4 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#2d3a24]">
-              <option><span class="lang-ja">新規仕入れについて</span><span class="lang-en hidden">New Wholesale Accounts</span></option>
-              <option><span class="lang-ja">大口ロット見積のご依頼</span><span class="lang-en hidden">Bulk Volume Quotes</span></option>
-              <option><span class="lang-ja">売場支援・提案について</span><span class="lang-en hidden">Retail Sales Support</span></option>
-            </select>
           </div>
         </div>
 
@@ -692,76 +603,6 @@
             }
           }
         });
-      }
-
-      // 3. ボリュームディスカウント計算ロジック
-      const productsData = {
-        'gen-01': { basePrice: 500, minLot: 50 }, // B-grade items as proxy
-        'gen-02': { basePrice: 2000, minLot: 10 },
-        'bh-01': { basePrice: 1500, minLot: 30 }
-      };
-
-      function updateQty(id, change, minLot) {
-        const input = document.getElementById('qty-' + id);
-        let current = parseInt(input.value) || 0;
-        if (current === 0 && change > 0) {
-          current = minLot;
-        } else {
-          current += change;
-        }
-        if (current < minLot && current > 0) current = minLot;
-        if (current < 0) current = 0;
-        input.value = current === 0 ? '' : current;
-        calculateTotal();
-      }
-
-      function calculateTotal() {
-        let grandTotal = 0;
-        let hasItems = false;
-        let summaryItemsJa = [];
-        let summaryItemsEn = [];
-
-        for (const [id, p] of Object.entries(productsData)) {
-          const input = document.getElementById('qty-' + id);
-          if(!input) continue;
-          const qty = parseInt(input.value) || 0;
-          const rowContainer = document.getElementById('row-' + id);
-          const totalDisplay = document.getElementById('total-' + id);
-
-          if (qty > 0) {
-            hasItems = true;
-            const itemTotal = p.basePrice * qty;
-            grandTotal += itemTotal;
-
-            rowContainer.classList.remove('hidden');
-            totalDisplay.textContent = '¥' + itemTotal.toLocaleString();
-            
-            const nameJa = document.getElementById('name-ja-' + id).textContent;
-            const nameEn = document.getElementById('name-en-' + id).textContent;
-            summaryItemsJa.push(`${nameJa} x ${qty}点`);
-            summaryItemsEn.push(`${nameEn} x ${qty} units`);
-          } else {
-            rowContainer.classList.add('hidden');
-          }
-        }
-
-        const summaryBox = document.getElementById('summary-box');
-        if (hasItems) {
-          summaryBox.classList.remove('hidden');
-          document.getElementById('grand-total-display').textContent = '¥' + grandTotal.toLocaleString();
-          
-          document.getElementById('submit-quote-btn').onclick = () => {
-            const msgInput = document.getElementById('form-message');
-            if (isEnglish) {
-              msgInput.value = `I would like a quote for:\n${summaryItemsEn.join('\n')}\n\nAdditional notes: `;
-            } else {
-              msgInput.value = `以下の商品の仕入れ見積を希望します。\n${summaryItemsJa.join('\n')}\n\nその他ご要望等： `;
-            }
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-          };
-        } else {
-          summaryBox.classList.add('hidden');
-        }
       }
 
       // 4. お問い合わせフォーム送信シミュレーション
