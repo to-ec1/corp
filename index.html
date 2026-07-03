@@ -359,7 +359,7 @@
               <span class="lang-en hidden">Key Retail Hooks & Wellness Lines</span>
             </h3>
             <p class="text-xs md:text-sm text-[#6b7c5c]">
-              <span class="lang-ja">店舗の集客を加速させる「訳あり品」と、信頼の「独自サプリ」を即座にお見積りいただけます。</span>
+              <span class="lang-ja">店舗の集客を加速させる生活雑貨と、信頼のサプリメント</span>
               <span class="lang-en hidden">Get instant quotes on "B-grade goods" that drive traffic, and trusted "original supplements."</span>
             </p>
           </div>
@@ -372,7 +372,7 @@
               <span class="lang-ja">雑貨・家電</span><span class="lang-en hidden">General Goods</span>
             </button>
             <button id="tab-beauty" onclick="filterCatalog('beauty')" class="px-4 py-1.5 text-xs font-bold rounded-full transition-all text-[#2d3a24] hover:opacity-80 cursor-pointer">
-              <span class="lang-ja">健康食品</span><span class="lang-en hidden">Wellness</span>
+              <span class="lang-ja">サプリメント・コスメ</span><span class="lang-en hidden">Wellness</span>
             </button>
           </div>
         </div>
@@ -381,7 +381,7 @@
           
           <div class="product-card bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] overflow-hidden flex flex-col justify-between transition-all hover:shadow-md" data-category="general" id="card-gen-01">
             <div class="relative h-48 overflow-hidden bg-slate-100 border-b border-[#e3dbc9]">
-              <img src="image_7c619f.png" class="w-full h-full object-cover object-center" onError="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80'">
+              <img src="image_7c619f.jpg" class="w-full h-full object-cover object-center" onError="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80'">
               <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2d3a24] text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm"><span class="lang-ja">一般雑貨</span><span class="lang-en hidden">General Goods</span></span>
             </div>
             <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
@@ -395,8 +395,8 @@
 
           <div class="product-card bg-[#fbf9f5] border border-[#e3dbc9] rounded-[16px] overflow-hidden flex flex-col justify-between transition-all hover:shadow-md" data-category="general" id="card-gen-02">
             <div class="relative h-48 overflow-hidden bg-slate-100 border-b border-[#e3dbc9]">
-              <img src="image_7c619f.jpg" class="w-full h-full object-cover object-center" onError="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2d3a24] text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm"><span class="lang-ja">家電・工具</span><span class="lang-en hidden">Electronics</span></span>
+              <img src="image_7cb41b.png" class="w-full h-full object-cover object-center" onError="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2d3a24] text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm"><span class="lang-ja">生活雑貨</span><span class="lang-en hidden">Electronics</span></span>
             </div>
             <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div class="space-y-2">
@@ -414,7 +414,7 @@
             </div>
             <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div class="space-y-2">
-                <h4 class="text-base font-extrabold leading-snug"><span class="lang-ja" id="name-ja-bh-01">コエンザイムQ10</span><span class="lang-en hidden" id="name-en-bh-01">[Exclusive] Kuro-chikara Series</span></h4>
+                <h4 class="text-base font-extrabold leading-snug"><span class="lang-ja" id="name-ja-bh-01">サプリメント・コスメ</span><span class="lang-en hidden" id="name-en-bh-01">[Exclusive] Kuro-chikara Series</span></h4>
                 <p class="text-xs text-[#6b7c5c] leading-relaxed line-clamp-3"><span class="lang-ja">リピーターの付きやすい国内工場生産のサプリメント。健康感度が高い層に向けた、確かな手応えの商品です。</span><span class="lang-en hidden">Our exclusively developed supplements with high repeat rates. Designed for health-conscious customers seeking real results.</span></p>
                 <p class="text-[10px] text-[#6b7c5c] bg-[#f4efe6] p-2 rounded border border-[#e3dbc9] font-sans"><span class="lang-ja">CoQ10 300mg配合の高機能サプリ</span><span class="lang-en hidden">Ingredients: Select Black Materials Blend / 90 Capsules</span></p>
               </div>
@@ -604,7 +604,9 @@
         });
       }
 
-      // 4. お問い合わせフォーム送信（/api/contact へPOST）
+      // 4. お問い合わせフォーム送信（GAS Webアプリへ POST）
+      const GAS_CONTACT_URL = 'https://script.google.com/macros/s/AKfycbwcqQn1K53p5ubZ3_3IVwiElzNm2AtigPyzYDN5ApbTZtoGeov9eecJs9i7uEb16uhvGQ/exec';
+
       async function handleFormSubmit(e) {
         e.preventDefault();
         const form = e.target;
@@ -618,9 +620,9 @@
 
         try {
           console.log("送信開始:", payload);
-          const res = await fetch('/api/contact', {
+          const res = await fetch(GAS_CONTACT_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload),
           });
           const result = await res.json();
